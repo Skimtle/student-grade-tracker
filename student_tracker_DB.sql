@@ -1,0 +1,215 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 20, 2026 at 07:40 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `student_tracker_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_grades`
+--
+-- Creation: Apr 16, 2026 at 01:28 PM
+--
+
+CREATE TABLE `tbl_grades` (
+  `grade_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `grade` decimal(5,2) NOT NULL,
+  `date_recorded` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `tbl_grades`:
+--   `student_id`
+--       `tbl_students` -> `student_id`
+--   `subject_id`
+--       `tbl_subjects` -> `subject_id`
+--   `user_id`
+--       `tbl_users` -> `user_id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_students`
+--
+-- Creation: Apr 16, 2026 at 01:28 PM
+--
+
+CREATE TABLE `tbl_students` (
+  `student_id` int(11) NOT NULL,
+  `student_number` varchar(20) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `year_level` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `tbl_students`:
+--   `user_id`
+--       `tbl_users` -> `user_id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_subjects`
+--
+-- Creation: Apr 16, 2026 at 01:28 PM
+--
+
+CREATE TABLE `tbl_subjects` (
+  `subject_id` int(11) NOT NULL,
+  `subject_code` varchar(20) NOT NULL,
+  `subject_name` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `tbl_subjects`:
+--   `user_id`
+--       `tbl_users` -> `user_id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users`
+--
+-- Creation: Apr 16, 2026 at 01:28 PM
+-- Last update: Apr 20, 2026 at 05:32 AM
+--
+
+CREATE TABLE `tbl_users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `tbl_users`:
+--
+
+--
+-- Dumping data for table `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`user_id`, `username`, `password`, `full_name`, `created_at`) VALUES
+(1, 'andrew', 'admin123', 'Andrew Valencia', '2026-04-17 01:24:50');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_grades`
+--
+ALTER TABLE `tbl_grades`
+  ADD PRIMARY KEY (`grade_id`),
+  ADD UNIQUE KEY `unique_student_subject` (`student_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `tbl_students`
+--
+ALTER TABLE `tbl_students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `student_number` (`student_number`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `tbl_subjects`
+--
+ALTER TABLE `tbl_subjects`
+  ADD PRIMARY KEY (`subject_id`),
+  ADD UNIQUE KEY `subject_code` (`subject_code`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_grades`
+--
+ALTER TABLE `tbl_grades`
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_students`
+--
+ALTER TABLE `tbl_students`
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_subjects`
+--
+ALTER TABLE `tbl_subjects`
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_grades`
+--
+ALTER TABLE `tbl_grades`
+  ADD CONSTRAINT `tbl_grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `tbl_students` (`student_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tbl_grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `tbl_subjects` (`subject_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tbl_grades_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`);
+
+--
+-- Constraints for table `tbl_students`
+--
+ALTER TABLE `tbl_students`
+  ADD CONSTRAINT `tbl_students_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`);
+
+--
+-- Constraints for table `tbl_subjects`
+--
+ALTER TABLE `tbl_subjects`
+  ADD CONSTRAINT `tbl_subjects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
