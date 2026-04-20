@@ -12,5 +12,8 @@ public class Student_Grade_Tracker {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginUI().setVisible(true);
+        });
     }
 }
