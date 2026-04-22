@@ -210,7 +210,7 @@ public class LoginUI extends javax.swing.JFrame {
         } else {
             try{
                 con = SQLconnection.getConnection();
-                pst = con.prepareStatement("select * from tbl_users where username=? and password=?");
+                pst = con.prepareStatement("select * from tbl_faculty where username=? and password=?");
                 pst.setString(1, uname);
                 pst.setString(2, pword);
                 rs = pst.executeQuery();
