@@ -4,11 +4,32 @@
  */
 package sgt.UI;
 
+import java.awt.Color;
+import sgt.session.SQLconnection;
+import java.sql.Connection;
+import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 /**
  *
  * @author Cii
  */
 public class AddstudUI extends javax.swing.JFrame {
+    private String savedName;
+    Connection con;
+    
+    public AddstudUI(String fullName){
+        initComponents();
+        this.savedName = fullName;
+        setResizable(false);
+        this.setLocationRelativeTo(null);
+        populate_table();
+        jPanel1.setBackground(Color.decode("#F28C5E"));
+    }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddstudUI.class.getName());
 
@@ -16,7 +37,19 @@ public class AddstudUI extends javax.swing.JFrame {
      * Creates new form AddstudUI
      */
     public AddstudUI() {
-        initComponents();
+        this("error");
+    }
+    
+    private void populate_table(){
+        try{
+            con = SQLconnection.getConnection();
+            String sqlquery = "SELECT * FROM tbl_students";
+            PreparedStatement pst = con.prepareStatement(sqlquery);
+            ResultSet rs = pst.executeQuery();
+            tbl_students.setModel(DbUtils.resultSetToTableModel(rs));  
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -29,44 +62,29 @@ public class AddstudUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        text_student_id = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        text_student_number = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        text_First_name = new javax.swing.JTextField();
+        fname = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        text_Last_name = new javax.swing.JTextField();
+        lname = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        text_year_level = new javax.swing.JComboBox<>();
-        text_program = new javax.swing.JComboBox<>();
+        yrlevel = new javax.swing.JComboBox<>();
+        program = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_students = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Student Information"));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Student id:");
-
-        text_student_id.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        text_student_id.addActionListener(this::text_student_idActionPerformed);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Student Number:");
-
-        text_student_number.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        text_student_number.addActionListener(this::text_student_numberActionPerformed);
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("First Name:");
 
-        text_First_name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        text_First_name.addActionListener(this::text_First_nameActionPerformed);
+        fname.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        fname.addActionListener(this::fnameActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Last Name:");
@@ -74,8 +92,8 @@ public class AddstudUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Year Level:");
 
-        text_Last_name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        text_Last_name.addActionListener(this::text_Last_nameActionPerformed);
+        lname.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lname.addActionListener(this::lnameActionPerformed);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Program:");
@@ -84,13 +102,13 @@ public class AddstudUI extends javax.swing.JFrame {
         jButton1.setText("Add Student");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        text_year_level.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
-        text_year_level.addActionListener(this::text_year_levelActionPerformed);
+        yrlevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
+        yrlevel.addActionListener(this::yrlevelActionPerformed);
 
-        text_program.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science", "Information Technology", "Entertainment and Multimedia Computing" }));
-        text_program.addActionListener(this::text_programActionPerformed);
+        program.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science", "Information Technology", "Entertainment and Multimedia Computing" }));
+        program.addActionListener(this::programActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_students.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -98,119 +116,138 @@ public class AddstudUI extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "First Name", "Last Name", "Year Level", "Program"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_students);
+
+        jButton2.setText("back");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(text_program, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(text_year_level, 0, 150, Short.MAX_VALUE)
-                        .addComponent(text_student_number)
-                        .addComponent(text_First_name)
-                        .addComponent(text_Last_name)
-                        .addComponent(text_student_id)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(yrlevel, 0, 150, Short.MAX_VALUE)
+                                    .addComponent(fname)
+                                    .addComponent(lname)
+                                    .addComponent(program, 0, 1, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton2)))
+                        .addGap(15, 15, 15)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(text_student_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(text_student_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(text_First_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(text_Last_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(text_year_level, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(text_program, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(yrlevel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 91, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void text_student_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_student_idActionPerformed
+    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_text_student_idActionPerformed
+    }//GEN-LAST:event_fnameActionPerformed
 
-    private void text_student_numberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_student_numberActionPerformed
+    private void lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_text_student_numberActionPerformed
-
-    private void text_First_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_First_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_text_First_nameActionPerformed
-
-    private void text_Last_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_Last_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_text_Last_nameActionPerformed
+    }//GEN-LAST:event_lnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String firstName = fname.getText();
+        String lastName = lname.getText();
+        String yearLevel = yrlevel.getSelectedItem().toString();
+        String programCourse = program.getSelectedItem().toString();
+        
+        int yearValue = yrlevel.getSelectedIndex() + 1;
+        
+        try{
+            String sql = "INSERT INTO tbl_students (first_name, last_name, year_level, program) VALUES(? , ? , ? , ?)";
+            java.sql.PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, firstName);
+            pst.setString(2, lastName);
+            pst.setInt(3, yearValue);
+            pst.setString(4, programCourse);
+            
+            pst.executeUpdate();
+            populate_table();
+        } catch (Exception e){
+            System.out.println("SQL Error" + e.getMessage());
+        }
+        
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void text_year_levelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_year_levelActionPerformed
+    private void yrlevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yrlevelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_text_year_levelActionPerformed
+    }//GEN-LAST:event_yrlevelActionPerformed
 
-    private void text_programActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_programActionPerformed
+    private void programActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_programActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_text_programActionPerformed
+    }//GEN-LAST:event_programActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Dashboardtest(this.savedName).setVisible(true);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,27 +269,24 @@ public class AddstudUI extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        FlatMacLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AddstudUI().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField fname;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField text_First_name;
-    private javax.swing.JTextField text_Last_name;
-    private javax.swing.JComboBox<String> text_program;
-    private javax.swing.JTextField text_student_id;
-    private javax.swing.JTextField text_student_number;
-    private javax.swing.JComboBox<String> text_year_level;
+    private javax.swing.JTextField lname;
+    private javax.swing.JComboBox<String> program;
+    private javax.swing.JTable tbl_students;
+    private javax.swing.JComboBox<String> yrlevel;
     // End of variables declaration//GEN-END:variables
 }
