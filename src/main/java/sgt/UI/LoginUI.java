@@ -3,16 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sgt.UI;
-import sgt.session.SQLconnection;
-import java.sql.Connection;
-import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import sgt.dao.loginUIDAO;
+import sgt.model.users;
 
 
 
@@ -27,9 +21,7 @@ public class LoginUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginUI
      */
-    Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
+
     public LoginUI() {
         initComponents();
         setResizable(false);
@@ -115,9 +107,9 @@ public class LoginUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,9 +136,9 @@ public class LoginUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1)
-                .addGap(21, 21, 21))
+                .addGap(33, 33, 33)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +174,7 @@ public class LoginUI extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -209,7 +201,7 @@ public class LoginUI extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1271, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1265, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -267,31 +259,22 @@ public class LoginUI extends javax.swing.JFrame {
         } else {
             tableName = "tbl_admin";
         }
-            try{
-                con = SQLconnection.getConnection();
-                pst = con.prepareStatement("select * from " +tableName + " where username=? and password=?");
-                pst.setString(1, uname);
-                pst.setString(2, pword);
-                rs = pst.executeQuery();
-                if(rs.next()){
-                    String fullName = rs.getString("full_name");
-                    JOptionPane.showMessageDialog(this, "Login Successful!");
-                    if(tableName.equals("tbl_faculty")){
-                        new Dashboardtest(fullName).setVisible(true);
-                    } else if(tableName.equals("tbl_admin")){
-                        new DashboardAdmin(fullName).setVisible(true);
-                    }
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid Credentials!");
-                }
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-                if (con != null) con.close();//update
+        
+        loginUIDAO dao = new loginUIDAO();
+        users user = dao.login(uname, pword, tableName);
 
-            } catch (Exception ex){
-                System.out.println(""+ex);
-            }
+        if(user != null){
+            sgt.session.UserSession.setCurrentUser(user.getfullName());
+            JOptionPane.showMessageDialog(this, "Login Successful!");
+                if(tableName.equals("tbl_faculty")){
+                    new Dashboardtest().setVisible(true);
+                    this.dispose();
+                } //else if(tableName.equals("tbl_admin")){
+                    //new DashboardAdmin().setVisible(true);
+                    //this.dispose();
+                //}
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid Credentials!");}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -327,10 +310,10 @@ public class LoginUI extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        FlatMacLightLaf.setup();
-        javax.swing.UIManager.put("Button.arc", 20);
-        javax.swing.UIManager.put("TextComponent.arc", 20);
-        javax.swing.UIManager.put("Component.arc", 20);
+        //FlatMacLightLaf.setup();
+        //javax.swing.UIManager.put("Button.arc", 20);
+        //javax.swing.UIManager.put("TextComponent.arc", 20);
+        //javax.swing.UIManager.put("Component.arc", 20);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new LoginUI().setVisible(true));
         

@@ -7,10 +7,8 @@ package sgt.UI;
 import java.awt.Color;
 import sgt.session.SQLconnection;
 import java.sql.Connection;
-import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
@@ -19,12 +17,10 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  * @author Cii
  */
 public class AddstudUI extends javax.swing.JFrame {
-    private String savedName;
     Connection con;
     
     public AddstudUI(String fullName){
         initComponents();
-        this.savedName = fullName;
         setResizable(false);
         this.setLocationRelativeTo(null);
         populate_table();
@@ -244,7 +240,7 @@ public class AddstudUI extends javax.swing.JFrame {
     }//GEN-LAST:event_programActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Dashboardtest(this.savedName).setVisible(true);
+        new Dashboardtest().setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
