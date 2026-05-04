@@ -13,6 +13,7 @@ public class SQLconnection {
     static Connection con;
     
     public static Connection getConnection(){
+        Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_tracker_db", "root","");
@@ -20,5 +21,9 @@ public class SQLconnection {
             System.out.println("" +ex);
         }
         return con;
+    }
+
+    public static Connection getConnnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

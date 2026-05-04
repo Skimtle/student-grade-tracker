@@ -263,18 +263,18 @@ public class LoginUI extends javax.swing.JFrame {
         loginUIDAO dao = new loginUIDAO();
         users user = dao.login(uname, pword, tableName);
 
-        if(user != null){
-            sgt.session.UserSession.setCurrentUser(user.getfullName());
-            JOptionPane.showMessageDialog(this, "Login Successful!");
-                if(tableName.equals("tbl_faculty")){
-                    new Dashboardtest().setVisible(true);
-                    this.dispose();
-                } //else if(tableName.equals("tbl_admin")){
-                    //new DashboardAdmin().setVisible(true);
-                    //this.dispose();
-                //}
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid Credentials!");}
+        if(user != null) {
+        sgt.session.UserSession.setCurrentUser(user.getfullName());
+        JOptionPane.showMessageDialog(this, "Login Successful!");
+            if (tableName.equals("tbl_faculty")) {
+            new Dashboardtest().setVisible(true);
+            } else {
+            new DashboardAdmin().setVisible(true);
+            } this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            jPasswordField1.setText("");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -293,7 +293,7 @@ public class LoginUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

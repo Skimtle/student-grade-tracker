@@ -9,7 +9,8 @@ package sgt.session;
  * @author Skimtle
  */
 public class UserSession {
-    private static String currentUser;
+    private static String currentUser = null;
+    private static boolean isLoggedIn= false;
     
    public static void setCurrentUser(String name){
        currentUser = name;
@@ -19,5 +20,12 @@ public class UserSession {
    }
    public static void clear(){
        currentUser = null;
+   }
+   public static boolean isLoggedIn(){
+       return isLoggedIn;
+   }
+   public static void logout(){
+       currentUser = null;
+       isLoggedIn = false;
    }
 }

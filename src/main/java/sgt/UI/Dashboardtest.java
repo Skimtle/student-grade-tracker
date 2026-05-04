@@ -25,6 +25,14 @@ public class Dashboardtest extends javax.swing.JFrame {
         jLabel1.setText("Faculty Dashboard | Welcome, " + name);
         jPanel1.setBackground(Color.decode("#F28C5E"));
         setResizable(false);
+        
+        if (sgt.session.UserSession.getCurrentUser() == null) {
+            JOptionPane.showMessageDialog(null, "Please login first!", "Access Denied", JOptionPane.WARNING_MESSAGE);
+            java.awt.EventQueue.invokeLater(() -> {
+            new LoginUI().setVisible(true);
+            this.dispose();
+            });
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +168,7 @@ public class Dashboardtest extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

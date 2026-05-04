@@ -3,28 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sgt.UI;
-
 import java.awt.Color;
-import sgt.session.SQLconnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
-import net.proteanit.sql.DbUtils;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import sgt.util.TableHelper;
+import sgt.util.DatabaseHelper;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Cii
  */
 public class AddstudUI extends javax.swing.JFrame {
-    Connection con;
     
-    public AddstudUI(String fullName){
+    public AddstudUI(){
         initComponents();
         setResizable(false);
-        this.setLocationRelativeTo(null);
-        populate_table();
         jPanel1.setBackground(Color.decode("#F28C5E"));
+        populate_table();
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddstudUI.class.getName());
@@ -32,22 +26,11 @@ public class AddstudUI extends javax.swing.JFrame {
     /**
      * Creates new form AddstudUI
      */
-    public AddstudUI() {
-        this("error");
-    }
     
     private void populate_table(){
-        try{
-            con = SQLconnection.getConnection();
-            String sqlquery = "SELECT * FROM tbl_students";
-            PreparedStatement pst = con.prepareStatement(sqlquery);
-            ResultSet rs = pst.executeQuery();
-            tbl_students.setModel(DbUtils.resultSetToTableModel(rs));  
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+        String sql = "SELECT * FROM tbl_student";
+        TableHelper.updateTable(tbl_students, sql);
         }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -208,23 +191,19 @@ public class AddstudUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String firstName = fname.getText();
         String lastName = lname.getText();
-        String yearLevel = yrlevel.getSelectedItem().toString();
         String programCourse = program.getSelectedItem().toString();
-        
         int yearValue = yrlevel.getSelectedIndex() + 1;
         
-        try{
-            String sql = "INSERT INTO tbl_students (first_name, last_name, year_level, program) VALUES(? , ? , ? , ?)";
-            java.sql.PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, firstName);
-            pst.setString(2, lastName);
-            pst.setInt(3, yearValue);
-            pst.setString(4, programCourse);
+        String sql = "INSERT INTO tbl_students (first_name, last_name, year_level, program) VALUES(?, ?, ?, ?)";
+        boolean success = sgt.util.DatabaseHelper.executeUpdate(sql, firstName, lastName, yearValue, programCourse);
+        
+        if (success){
+            javax.swing.JOptionPane.showMessageDialog(this, "Student added successfully!");
             
-            pst.executeUpdate();
+            fname.setText("");
+            lname.setText("");
+            
             populate_table();
-        } catch (Exception e){
-            System.out.println("SQL Error" + e.getMessage());
         }
         
         
@@ -248,7 +227,7 @@ public class AddstudUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
