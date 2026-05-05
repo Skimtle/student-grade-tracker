@@ -5,25 +5,22 @@
 package sgt.session;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 /**
  *
  * @author Andrew
  */
 public class SQLconnection {
-    static Connection con;
     
     public static Connection getConnection(){
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_tracker_db", "root","");
-        }catch(Exception ex){
+        }catch(ClassNotFoundException | SQLException ex){
             System.out.println("" +ex);
         }
         return con;
     }
 
-    public static Connection getConnnection() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

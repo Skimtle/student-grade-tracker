@@ -11,6 +11,8 @@ package sgt.session;
 public class UserSession {
     private static String currentUser = null;
     private static boolean isLoggedIn= false;
+    private static int facultyId;
+    private static String facultyName;
     
    public static void setCurrentUser(String name){
        currentUser = name;
@@ -27,5 +29,13 @@ public class UserSession {
    public static void logout(){
        currentUser = null;
        isLoggedIn = false;
+   }
+   public static int getFacultyId(){return facultyId;}
+   public static String getFacultyName(){return facultyName;}
+   public static void setSession(int id, String name){
+       facultyId = id;
+       facultyName = name;
+       currentUser = name;
+       isLoggedIn = true;
    }
 }

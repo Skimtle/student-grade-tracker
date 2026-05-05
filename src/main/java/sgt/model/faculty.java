@@ -9,14 +9,7 @@ package sgt.model;
  * @author Skimtle
  */
 public class faculty extends users {
-    private int facultyID;
-    
-    public faculty(int facultyID, String username, String password, String fullName){
-        super(username, password, fullName);
-        this.facultyID = facultyID;
-    }
-    
-    public int getfacultyID(){
-        return facultyID;
+    public faculty(int id, String username, String password, String fullName){
+        super(id, username, password, fullName);
     }
 }

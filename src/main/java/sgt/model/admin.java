@@ -9,14 +9,7 @@ package sgt.model;
  * @author Skimtle
  */
 public class admin extends users {
-    private int adminID;
-    
-    public admin(int adminID, String username, String password, String fullName){
-        super(username, password, fullName);
-        this.adminID = adminID;
-    }
-    
-    public int getfacultyID(){
-        return adminID;
+    public admin(int id, String username, String password, String fullName){
+        super(id, username, password, fullName);
     }
 }

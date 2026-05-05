@@ -9,15 +9,20 @@ package sgt.model;
  * @author Skimtle
  */
 public class users {
+    protected int id;
     private String username;
     private String password;
     private String fullName;
     
     
-    public users(String username, String password, String fullName){
+    public users(int id, String username, String password, String fullName){
+        this.id = id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+    }
+    public int getId(){
+        return id;
     }
     
     public String getUsername(){

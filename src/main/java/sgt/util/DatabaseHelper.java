@@ -14,7 +14,7 @@ import sgt.session.SQLconnection;
  */
 public class DatabaseHelper {
     public static boolean executeUpdate(String sql, Object... params){
-        try (Connection con = SQLconnection.getConnnection();
+        try (Connection con = SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             for(int i = 0; i < params.length; i++){
                 pst.setObject(i + 1, params[i]);
@@ -27,5 +27,9 @@ public class DatabaseHelper {
                     return false;
                     }
         }
+
+    public static Connection getConnection() {
+        return sgt.session.SQLconnection.getConnection();
+    }
     }
 
