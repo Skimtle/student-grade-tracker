@@ -7,9 +7,11 @@ package sgt.session;
 /**
  *
  * @author Skimtle
+ * @author Cii
  */
 public class UserSession {
     private static String currentUser = null;
+    private static String currentRole = null; //Added by Cii
     private static boolean isLoggedIn= false;
     private static int facultyId;
     private static String facultyName;
@@ -20,6 +22,13 @@ public class UserSession {
    public static String getCurrentUser(){
        return (currentUser != null) ? currentUser : "Guest";
    }
+   public static void setCurrentRole(String role) { //Added by Cii 
+        currentRole = role;
+    }
+
+    public static String getCurrentRole() { //Added by Cii
+        return currentRole;
+    }
    public static void clear(){
        currentUser = null;
    }
