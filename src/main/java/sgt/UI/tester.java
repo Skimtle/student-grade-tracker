@@ -6,16 +6,16 @@ package sgt.UI;
 
 /**
  *
- * @author Andrew
+ * @author Skimtle
  */
-public class studentManagement extends javax.swing.JFrame {
+public class tester extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(studentManagement.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(tester.class.getName());
 
     /**
-     * Creates new form studentManagement
+     * Creates new form tester
      */
-    public studentManagement() {
+    public tester() {
         initComponents();
     }
 
@@ -34,11 +34,11 @@ public class studentManagement extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -66,7 +66,7 @@ public class studentManagement extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new studentManagement().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new tester().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

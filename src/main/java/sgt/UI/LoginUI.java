@@ -263,15 +263,21 @@ public class LoginUI extends javax.swing.JFrame {
         loginUIDAO dao = new loginUIDAO();
         users user = dao.login(uname, pword, tableName);
 
-        if(user != null) {
-        //sgt.session.UserSession.setCurrentUser(user.getfullName());
-        sgt.session.UserSession.setSession(user.getId(), user.getfullName());
-        JOptionPane.showMessageDialog(this, "Login Successful!");
+        if (user != null) {
+            sgt.session.UserSession.setCurrentUser(user.getfullName());
+            JOptionPane.showMessageDialog(this, "Login Successful!");
             if (tableName.equals("tbl_faculty")) {
-            new Dashboardtest().setVisible(true);
+                Dashboardtest dash = new Dashboardtest();
+                dash.setSize(this.getSize());
+                dash.setLocationRelativeTo(null);
+                dash.setVisible(true);
             } else {
-            new DashboardAdmin().setVisible(true);
-            } this.dispose();
+                DashboardAdmin dashboard = new DashboardAdmin();
+                dashboard.setSize(this.getSize());
+                dashboard.setLocationRelativeTo(null);
+                dashboard.setVisible(true);
+            }
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
             jPasswordField1.setText("");
@@ -283,18 +289,39 @@ public class LoginUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     static void main(String[] args) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //FlatMacLightLaf.setup();
+        //javax.swing.UIManager.put("Button.arc", 20);
+        //javax.swing.UIManager.put("TextComponent.arc", 20);
+        //javax.swing.UIManager.put("Component.arc", 20);
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new LoginUI().setVisible(true));
         
     }
