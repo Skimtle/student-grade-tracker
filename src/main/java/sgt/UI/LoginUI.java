@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import sgt.dao.loginUIDAO;
 import sgt.model.users;
+import sgt.util.WindowHelper;
 
 
 
@@ -267,16 +268,11 @@ public class LoginUI extends javax.swing.JFrame {
             sgt.session.UserSession.setCurrentUser(user.getfullName());
             JOptionPane.showMessageDialog(this, "Login Successful!");
             if (tableName.equals("tbl_faculty")) {
-                Dashboardtest dash = new Dashboardtest();
-                dash.setSize(this.getSize());
-                dash.setLocationRelativeTo(null);
-                dash.setVisible(true);
-            } else {
-                DashboardAdmin dashboard = new DashboardAdmin();
-                dashboard.setSize(this.getSize());
-                dashboard.setLocationRelativeTo(null);
-                dashboard.setVisible(true);
-            }
+                WindowHelper.openWindow(this, new DashboardFaculty());
+            }else {
+                sgt.session.UserSession.setCurrentRole("admin"); // Added by Cii
+               WindowHelper.openWindow(this, new DashboardAdmin());
+}
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);

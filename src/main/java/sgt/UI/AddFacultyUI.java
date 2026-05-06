@@ -5,6 +5,7 @@
 package sgt.UI;
 import sgt.util.TableHelper;
 import sgt.util.DatabaseHelper;
+import sgt.util.WindowHelper;
 /**
  *
  * @author Cii
@@ -44,6 +45,7 @@ public class AddFacultyUI extends javax.swing.JFrame {
         AddFac = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_faculty = new javax.swing.JTable();
+        back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,6 +87,9 @@ public class AddFacultyUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbl_faculty);
 
+        back.setText("back");
+        back.addActionListener(this::backActionPerformed);
+
         javax.swing.GroupLayout AddFacultyLayout = new javax.swing.GroupLayout(AddFaculty);
         AddFaculty.setLayout(AddFacultyLayout);
         AddFacultyLayout.setHorizontalGroup(
@@ -92,26 +97,32 @@ public class AddFacultyUI extends javax.swing.JFrame {
             .addGroup(AddFacultyLayout.createSequentialGroup()
                 .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AddFacultyLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddFacultyLayout.createSequentialGroup()
+                                .addGap(151, 151, 151)
+                                .addComponent(AddFac, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22))
                             .addGroup(AddFacultyLayout.createSequentialGroup()
-                                .addComponent(Pass)
-                                .addGap(32, 32, 32)
-                                .addComponent(password))
-                            .addGroup(AddFacultyLayout.createSequentialGroup()
-                                .addComponent(Name)
-                                .addGap(28, 28, 28)
-                                .addComponent(full_Name1))
-                            .addGroup(AddFacultyLayout.createSequentialGroup()
-                                .addComponent(usrnme)
-                                .addGap(32, 32, 32)
-                                .addComponent(username)))
-                        .addGap(37, 37, 37))
+                                .addGap(25, 25, 25)
+                                .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(AddFacultyLayout.createSequentialGroup()
+                                        .addComponent(Pass)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(password))
+                                    .addGroup(AddFacultyLayout.createSequentialGroup()
+                                        .addComponent(usrnme)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(username))
+                                    .addGroup(AddFacultyLayout.createSequentialGroup()
+                                        .addComponent(Name)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                        .addComponent(full_Name1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(18, 18, 18))
                     .addGroup(AddFacultyLayout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(AddFac, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(back)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         AddFacultyLayout.setVerticalGroup(
@@ -131,7 +142,9 @@ public class AddFacultyUI extends javax.swing.JFrame {
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(AddFac)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(back)
+                .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
         );
 
@@ -171,7 +184,6 @@ public class AddFacultyUI extends javax.swing.JFrame {
             return;
         }
         String sql = "INSERT INTO tbl_faculty (full_name, username, password) VALUES(?, ?, ?)";
-        TableHelper.updateTable(tbl_faculty, sql);
         boolean success = DatabaseHelper.executeUpdate(sql, fullName, uname, pword);
 
 
@@ -200,21 +212,21 @@ public class AddFacultyUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new AddFacultyUI().setVisible(true));
     }//GEN-LAST:event_AddFacActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        //</editor-fold>
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        String role = sgt.session.UserSession.getCurrentRole();
+    if ("faculty".equals(role)) {
+       WindowHelper.openWindow(this, new DashboardFaculty());
+    } else {
+        WindowHelper.openWindow(this, new DashboardAdmin());
+    } // TODO add your handling code here:
+    }//GEN-LAST:event_backActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddFac;
     private javax.swing.JPanel AddFaculty;
     private javax.swing.JLabel Name;
     private javax.swing.JLabel Pass;
+    private javax.swing.JButton back;
     private javax.swing.JTextField full_Name1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField password;

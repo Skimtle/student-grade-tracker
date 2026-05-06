@@ -9,18 +9,16 @@ import sgt.session.UserSession;
 import sgt.util.WindowHelper;
 
 /**
- *
- * @author Andrew
  * @author Cii
  */
-public class DashboardAdmin extends javax.swing.JFrame {
+public class DashboardFaculty extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardFaculty.class.getName());
 
     /**
-     * Creates new form DashboardAdmin
+     * Creates new form DashboardFaculty
      */
-    public DashboardAdmin() {
+    public DashboardFaculty() {
         initComponents();
         String name = UserSession.getCurrentUser();
         jLabel3.setText(name);
@@ -45,8 +43,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         ProgramManagement = new javax.swing.JButton();
         GradesManagement = new javax.swing.JButton();
         StudentGradeSummary = new javax.swing.JButton();
-        FacultyManagement = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        Logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,11 +56,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 51, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel2.setText("Admin Dashboard | Welcome,");
+        jLabel2.setText("Faculty Dashboard | Welcome,");
 
         jLabel3.setBackground(new java.awt.Color(255, 51, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel3.setText("Admin");
+        jLabel3.setText("Faculty");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,16 +122,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         StudentGradeSummary.setPreferredSize(new java.awt.Dimension(185, 48));
         StudentGradeSummary.addActionListener(this::StudentGradeSummaryActionPerformed);
 
-        FacultyManagement.setBackground(new java.awt.Color(255, 153, 51));
-        FacultyManagement.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        FacultyManagement.setForeground(new java.awt.Color(255, 255, 255));
-        FacultyManagement.setText("Faculty Management");
-        FacultyManagement.setPreferredSize(new java.awt.Dimension(185, 48));
-        FacultyManagement.addActionListener(this::FacultyManagementActionPerformed);
-
-        jButton6.setFont(new java.awt.Font("Public Sans Medium", 0, 12)); // NOI18N
-        jButton6.setText("Logout");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
+        Logout.setFont(new java.awt.Font("Public Sans Medium", 0, 12)); // NOI18N
+        Logout.setText("Logout");
+        Logout.addActionListener(this::LogoutActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,17 +141,16 @@ public class DashboardAdmin extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(StudentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(216, 216, 216)
-                                .addComponent(FacultyManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(ProgramManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(SubjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(GradesManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(StudentGradeSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(SubjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(GradesManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(ProgramManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(231, 231, 231)))
                         .addGap(174, 174, 174)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,22 +162,19 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StudentManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FacultyManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GradesManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SubjectManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(StudentGradeSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ProgramManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))))
+                            .addComponent(GradesManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(StudentGradeSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ProgramManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -208,7 +194,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StudentManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentManagementActionPerformed
-        WindowHelper.openWindow(this, new AddstudUI());// TODO add your handling code here:
+         WindowHelper.openWindow(this, new AddstudUI());// TODO add your handling code here:
     }//GEN-LAST:event_StudentManagementActionPerformed
 
     private void SubjectManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubjectManagementActionPerformed
@@ -227,11 +213,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_StudentGradeSummaryActionPerformed
 
-    private void FacultyManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FacultyManagementActionPerformed
-        WindowHelper.openWindow(this, new AddFacultyUI());;// TODO add your handling code here:
-    }//GEN-LAST:event_FacultyManagementActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
         int response = JOptionPane.showConfirmDialog(this,
             "Do you want to logout?",
             "Confirm",
@@ -242,7 +224,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_LogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,18 +248,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new DashboardAdmin().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DashboardFaculty().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton FacultyManagement;
     private javax.swing.JButton GradesManagement;
+    private javax.swing.JButton Logout;
     private javax.swing.JButton ProgramManagement;
     private javax.swing.JLabel Q1;
     private javax.swing.JButton StudentGradeSummary;
     private javax.swing.JButton StudentManagement;
     private javax.swing.JButton SubjectManagement;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
