@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardAdmin.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardAdmin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/Dashboardtest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/Dashboardtest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/LoginUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/LoginUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sgt/session/SQLconnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/session/SQLconnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,30 +25,29 @@
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
   <component name="ProjectId" id="3DFS1b7xVP7nMWZ72oPH4QvxtWp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/NetBeansProject/StudentGradeTracker&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/NetBeansProject/StudentGradeTracker",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
