@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sgt.UI;
-import sgt.util.TableHelper;
+import sgt.session.UserSession;
 import sgt.util.DatabaseHelper;
 import sgt.util.WindowHelper;
 /**
@@ -24,7 +24,7 @@ public class AddFacultyUI extends javax.swing.JFrame {
     
      private void populate_table() {
         String sql = "SELECT full_name, username, password FROM tbl_faculty";
-        sgt.util.TableHelper.updateTable(tbl_faculty, sql);
+        sgt.util.TableHelper.updateTable(tbl_faculty, sql, "");
      }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,9 +215,9 @@ public class AddFacultyUI extends javax.swing.JFrame {
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         String role = sgt.session.UserSession.getCurrentRole();
     if ("faculty".equals(role)) {
-       WindowHelper.openWindow(this, new DashboardFaculty());
+       WindowHelper.openWindow(this, new DashboardFaculty(UserSession.getCurrentUser()));
     } else {
-        WindowHelper.openWindow(this, new DashboardAdmin());
+        WindowHelper.openWindow(this, new DashboardAdmin(UserSession.getCurrentUser()));
     } // TODO add your handling code here:
     }//GEN-LAST:event_backActionPerformed
 

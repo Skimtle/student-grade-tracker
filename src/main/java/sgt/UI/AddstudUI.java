@@ -6,9 +6,7 @@ package sgt.UI;
 import java.awt.Color;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import sgt.util.TableHelper;
-import sgt.util.DatabaseHelper;
 import javax.swing.JOptionPane;
-import sgt.util.WindowHelper;
 /**
  *
  * @author Cii
@@ -20,6 +18,16 @@ public class AddstudUI extends javax.swing.JFrame {
         setResizable(false);
         jPanel1.setBackground(Color.decode("#F28C5E"));
         populate_table();
+        loadProgramDrodown();
+    }
+    
+    private void loadProgramDrodown(){
+        program.removeAllItems();
+        program.addItem("Select Program");
+
+        for (String p : sgt.service.StudentService.getProgramList()){
+            program.addItem(p);
+        }
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddstudUI.class.getName());
@@ -29,8 +37,16 @@ public class AddstudUI extends javax.swing.JFrame {
      */
     
     private void populate_table(){
-        String sql = "SELECT * FROM tbl_students";
-        TableHelper.updateTable(tbl_students, sql);
+        String sql = "SELECT s.student_number as 'Student No.', " +
+                        "s.first_name as 'First Name', " +
+                        "s.last_name as 'Last Name', " +
+                        "s.year_level as 'Year', " +
+                        "p.program_code as 'Program', " + // Pulls BSCS
+                        "s.faculty_id as 'Faculty ID', " + // Added back
+                        "s.admin_id as 'Admin ID' " +       // Added back
+                        "FROM tbl_students s " +
+                        "JOIN tbl_programs p ON s.program_id = p.program_id";
+        TableHelper.updateTable(tbl_students, sql, "");
         }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,6 +70,7 @@ public class AddstudUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_students = new javax.swing.JTable();
         backb = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +121,13 @@ public class AddstudUI extends javax.swing.JFrame {
         backb.setText("back");
         backb.addActionListener(this::backbActionPerformed);
 
+        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,7 +152,10 @@ public class AddstudUI extends javax.swing.JFrame {
                         .addComponent(backb))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(156, 156, 156)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
                 .addContainerGap())
@@ -154,10 +181,12 @@ public class AddstudUI extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 545, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84)
                 .addComponent(backb)
                 .addContainerGap())
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,25 +206,44 @@ public class AddstudUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String firstName = fname.getText();
-        String lastName = lname.getText();
-        String programCourse = program.getSelectedItem().toString();
+        String firstName = fname.getText().trim();
+        String lastName = lname.getText().trim();
         int yearValue = yrlevel.getSelectedIndex() + 1;
+        String studentNum = sgt.service.StudentService.generateNextID();
         
-        String sql = "INSERT INTO tbl_students (first_name, last_name, year_level, program) VALUES(?, ?, ?, ?)";
-        boolean success = sgt.util.DatabaseHelper.executeUpdate(sql, firstName, lastName, yearValue, programCourse);
+        String selectedProgram = program.getSelectedItem().toString();
+        int programId = sgt.service.StudentService.getProgramId(selectedProgram);
+           
+        int currentId = sgt.session.UserSession.getUserId();
+        String role = sgt.session.UserSession.getCurrentRole();
         
-        if (success){
-            javax.swing.JOptionPane.showMessageDialog(this, "Student added successfully!");
-            
-            fname.setText("");
-            lname.setText("");
-            
-            populate_table();
+        Integer fId = null; //facultyId
+        Integer aId = null; //adminId
+        
+        if("faculty".equals(role)){
+            fId = currentId;
+        } else {
+            aId = currentId;
         }
         
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
+        sgt.model.Student newStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, fId, aId);
+        sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
+        boolean success = dao.addStudent(newStudent);
         
-        // TODO add your handling code here:
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Student added successfully!");
+            fname.setText("");
+            lname.setText("");
+            populate_table(); // Refresh the table
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to save to database.");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void yrlevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yrlevelActionPerformed
@@ -207,12 +255,13 @@ public class AddstudUI extends javax.swing.JFrame {
     }//GEN-LAST:event_programActionPerformed
 
     private void backbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbActionPerformed
-         String role = sgt.session.UserSession.getCurrentRole();
-    if ("faculty".equals(role)) {
-       WindowHelper.openWindow(this, new DashboardFaculty());
-    } else {
-        WindowHelper.openWindow(this, new DashboardAdmin());
-    }   // TODO add your handling code here:
+        String role = sgt.session.UserSession.getCurrentRole();
+        if ("faculty".equals(role)) {
+            new DashboardFaculty(sgt.session.UserSession.getCurrentUser()).setVisible(true);
+        } else {
+            new DashboardAdmin(sgt.session.UserSession.getCurrentUser()).setVisible(true);
+        }
+    this.dispose();   
     }//GEN-LAST:event_backbActionPerformed
 
     private void lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnameActionPerformed
@@ -222,6 +271,22 @@ public class AddstudUI extends javax.swing.JFrame {
     private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fnameActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String searchID = jTextField1.getText().trim();
+        String sql;
+        if(searchID.isEmpty()){
+            sql = "SELECT student_number as 'ID', first_name, last_name, year_level FROM tbl_students";
+            sgt.util.TableHelper.updateTable(tbl_students, sql, "");
+        } else {
+            sql = "SELECT student_number as 'ID', first_name, last_name, year_level FROM tbl_students WHERE student_numer LIKE ?";
+            sgt.util.TableHelper.updateTable(tbl_students, sql,  "%" + searchID + "%");
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +323,7 @@ public class AddstudUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField lname;
     private javax.swing.JComboBox<String> program;
     private javax.swing.JTable tbl_students;

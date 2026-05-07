@@ -14,13 +14,17 @@ import sgt.session.SQLconnection;
  * @author Skimtle
  */
 public class TableHelper {
-    public static void updateTable(JTable table, String query){
+    public static void updateTable(JTable table, String query, String param){
         try (Connection con = SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
+             ) {
             
+            if(param != null && !param.isEmpty()){
+                pst.setString(1, param + "%");
+            }
+            try(ResultSet rs = pst.executeQuery()){
             table.setModel(DbUtils.resultSetToTableModel(rs));
-            
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Table Error: " + e.getMessage());
         }

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 public class WindowHelper {
     
     public static void openWindow(JFrame parent, JFrame newWindow) {
-        newWindow.setSize(parent.getSize());
+        //newWindow.setSize(parent.getSize());
         newWindow.setLocationRelativeTo(null);
         newWindow.setVisible(true);
         parent.dispose();

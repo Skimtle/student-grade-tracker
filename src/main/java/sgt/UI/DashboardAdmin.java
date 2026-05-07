@@ -20,7 +20,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     /**
      * Creates new form DashboardAdmin
      */
-    public DashboardAdmin() {
+    public DashboardAdmin(String facultyName) {
         initComponents();
         String name = UserSession.getCurrentUser();
         jLabel3.setText(name);
@@ -266,7 +266,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new DashboardAdmin().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DashboardAdmin(UserSession.getCurrentUser()).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

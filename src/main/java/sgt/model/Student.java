@@ -14,15 +14,17 @@ public class Student {
     private String lastName;
     private int yearLevel;
     private int programId;
-    private int facultyId;
+    private Integer facultyId;
+    private Integer adminId;
     
-    public Student(String studentNum, String firstName, String lastName, int yearLevel, int programId, int facultyId){
+    public Student(String studentNum, String firstName, String lastName, int yearLevel, int programId, Integer facultyId, Integer adminId){
         this.studentNum = studentNum;
         this.firstName = firstName;
         this.lastName = lastName;
         this.yearLevel = yearLevel;
         this.programId = programId;
         this.facultyId = facultyId;
+        this.adminId = adminId;
     }
     //getter
     public String getStudentNum(){
@@ -40,8 +42,11 @@ public class Student {
     public int getProgramId(){
         return programId;
     }
-    public int getFacultyId(){
-        return facultyId; 
+    public Integer getFacultyId(){
+        return facultyId;
+    }
+    public Integer getAdminId(){
+        return adminId;
     }
     //setters
     public void setStudentNum(String studentNum){
@@ -51,7 +56,7 @@ public class Student {
         this.firstName = firstName;
     }
     public void setlastName(String lastName){
-        this.firstName = firstName;
+        this.lastName = lastName;
     }
     public void setYearLevel(int yearLevel){
         this.yearLevel = yearLevel;
@@ -59,8 +64,11 @@ public class Student {
     public void setProgramId(int programId){
         this.programId = programId;
     }
-    public void setFacultyId(int facultyId){
+    public void setFacultyId(Integer facultyId){
         this.facultyId = facultyId;
+    }
+    public void setAdminId(Integer adminId){
+        this.adminId = adminId;
     }
     
 }
