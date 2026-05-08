@@ -43,5 +43,45 @@ public class studentManagementDAO {
             return false;
         }
     }
+    
+    public boolean deleteStudent(String studentID) {
+        String sql = "DELETE FROM tbl_students WHERE student_number = ?";
+        try (Connection conn = SQLconnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, studentID);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateStudent(sgt.model.Student s) {
+        String sql = "UPDATE tbl_students SET first_name=?, last_name=?, year_level=?, " + "program_id=?, faculty_id=?, admin_id=? WHERE student_number=?";
+        try (Connection conn = SQLconnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, s.getFirstName());
+            pstmt.setString(2, s.getlastName());
+            pstmt.setInt(3, s.getYearLevel());
+            pstmt.setInt(4, s.getProgramId());
+            
+            if (s.getFacultyId() != null) {
+                pstmt.setInt(5, s.getFacultyId());
+            } else {
+                pstmt.setNull(5, java.sql.Types.INTEGER);
+            }
+            
+            if (s.getAdminId() != null) {
+                pstmt.setInt(6, s.getAdminId());
+            } else {
+                pstmt.setNull(6, java.sql.Types.INTEGER);
+            }
+            
+            pstmt.setString(7, s.getStudentNum());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
             
 }
