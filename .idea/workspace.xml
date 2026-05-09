@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="" />
+    <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddFacultyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddFacultyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/model/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/model/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,24 +37,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AddFacultyUI.executor": "Run",
-    "Application.StudentGradeTracker.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "masterlatest",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/NetBeansProject/StudentGradeTracker",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AddFacultyUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StudentGradeTracker.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;masterlatest&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/NetBeansProject/StudentGradeTracker&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

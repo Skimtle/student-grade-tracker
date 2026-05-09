@@ -31,7 +31,7 @@ public class UserSession {
     }
     
     public static void clear(){
-       currentUser = null;
+       logout();
     }
     public static boolean isLoggedIn(){
        return isLoggedIn;

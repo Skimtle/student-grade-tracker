@@ -214,11 +214,11 @@ public class AddFacultyUI extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         String role = sgt.session.UserSession.getCurrentRole();
-    if ("faculty".equals(role)) {
-       WindowHelper.openWindow(this, new DashboardFaculty(UserSession.getCurrentUser()));
-    } else {
-        WindowHelper.openWindow(this, new DashboardAdmin(UserSession.getCurrentUser()));
-    } // TODO add your handling code here:
+        if ("faculty".equals(role)) {
+            WindowHelper.openWindow(this, new DashboardFaculty(UserSession.getCurrentUser()));
+        } else {
+            WindowHelper.openWindow(this, new DashboardAdmin(UserSession.getCurrentUser()));
+        } // TODO add your handling code here:
     }//GEN-LAST:event_backActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

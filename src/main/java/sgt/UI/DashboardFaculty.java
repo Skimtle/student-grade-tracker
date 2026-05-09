@@ -19,12 +19,6 @@ public class DashboardFaculty extends javax.swing.JFrame {
     
     
     public DashboardFaculty(String facultyName) {
-        initComponents();
-        String name = UserSession.getCurrentUser();
-        jLabel1.setText("Faculty Dashboard | Welcome, " + name);
-        jPanel1.setBackground(Color.decode("#F28C5E"));
-        setResizable(false);
-        
         if (sgt.session.UserSession.getCurrentUser() == null) {
             JOptionPane.showMessageDialog(null, "Please login first!", "Access Denied", JOptionPane.WARNING_MESSAGE);
             java.awt.EventQueue.invokeLater(() -> {
@@ -32,6 +26,11 @@ public class DashboardFaculty extends javax.swing.JFrame {
             this.dispose();
             });
         }
+        initComponents();
+        String name = UserSession.getCurrentUser();
+        jLabel1.setText("Faculty Dashboard | Welcome, " + name);
+        jPanel1.setBackground(Color.decode("#F28C5E"));
+        setResizable(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +63,7 @@ public class DashboardFaculty extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Public Sans Medium", 0, 24)); // NOI18N
         jButton2.setText("Subject management");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setFont(new java.awt.Font("Public Sans Medium", 0, 24)); // NOI18N
         jButton3.setText("Grades Management");
@@ -150,6 +150,7 @@ public class DashboardFaculty extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION, 
             JOptionPane.QUESTION_MESSAGE);
         if(response == JOptionPane.YES_OPTION){
+            UserSession.clear();
             this.dispose();
             
             LoginUI login = new LoginUI();
@@ -163,6 +164,11 @@ public class DashboardFaculty extends javax.swing.JFrame {
         new ProgramManagement().setVisible(true);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new SubjectManagement().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
