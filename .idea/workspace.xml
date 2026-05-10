@@ -5,22 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddFacultyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddFacultyUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/AddstudUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/DashboardFaculty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/ProgramManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/SubjectManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/model/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/model/Program.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/session/UserSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sgt/dao/GradeDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sgt/model/Grade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/model/Grades.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,7 +51,11 @@
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/NetBeansProject/StudentGradeTracker&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
 }</component>
