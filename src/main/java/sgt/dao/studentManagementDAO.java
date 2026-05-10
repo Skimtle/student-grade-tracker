@@ -86,25 +86,13 @@ public class studentManagementDAO {
     }
     
     public int getTotalStudentCount() {
-        String role = sgt.session.UserSession.getCurrentRole();
-        int userId = sgt.session.UserSession.getUserId();
-    
-    
+     
         String sql = "SELECT COUNT(*) AS total FROM tbl_students";
     
-    
-        if ("faculty".equals(role)) {
-            sql = "SELECT COUNT(DISTINCT student_id) AS total FROM tbl_grades WHERE faculty_id = ?";
-        }
-
         try (Connection con = SQLconnection.getConnection();
-            PreparedStatement pst = con.prepareStatement(sql)) {
-        
-            if ("faculty".equals(role)) {
-                pst.setInt(1, userId);
-            }
-        
-            ResultSet rs = pst.executeQuery();
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery()) {
+           
             if (rs.next()) {
                 return rs.getInt("total");
             }
