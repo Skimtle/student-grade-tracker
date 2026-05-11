@@ -1,9 +1,11 @@
+D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\dao\GradeDAO.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\dao\loginUIDAO.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\dao\programManagementDAO.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\dao\studentManagementDAO.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\dao\subjectDAO.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\admin.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\faculty.java
+D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\Grade.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\Program.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\Student.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\model\Subject.java
@@ -16,6 +18,7 @@ D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\AddFacultyUI.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\AddstudUI.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\DashboardAdmin.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\DashboardFaculty.java
+D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\Grade_Management.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\LoginUI.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\ProgramManagement.java
 D:\NetBeansProject\StudentGradeTracker\src\main\java\sgt\UI\studentManagement.java

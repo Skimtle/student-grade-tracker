@@ -4,11 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="Commit in intelliJ" />
+    <list default="true" id="c7109e7f-acf1-4332-8efa-fc247c07fec9" name="Changes" comment="Commit in intelliJ">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/Grade_Management.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/Grade_Management.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/UI/Grade_Management.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/UI/Grade_Management.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/dao/GradeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/dao/GradeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sgt/model/Grade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sgt/model/Grade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/StudentGradeTracker-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/LoginUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/ProgramManagement$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/ProgramManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/SubjectManagement$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/SubjectManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/studentManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/UI/tester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/dao/loginUIDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/dao/programManagementDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/dao/studentManagementDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/dao/subjectDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/Program.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/Subject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/admin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/faculty.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/model/users.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/service/StudentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/session/SQLconnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/session/UserSession.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/util/DatabaseHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/util/TableHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/util/UIHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sgt/util/WindowHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="51" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -20,12 +59,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://Skimtle@github.com/Skimtle/student-grade-tracker.git",
-    "accountId": "93710ddd-3099-449b-b8e7-882e16e6bcdd"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Skimtle&quot;
   }
-}]]></component>
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://Skimtle@github.com/Skimtle/student-grade-tracker.git&quot;,
+    &quot;accountId&quot;: &quot;93710ddd-3099-449b-b8e7-882e16e6bcdd&quot;
+  }
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -38,41 +83,91 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AddFacultyUI.executor": "Run",
-    "Application.StudentGradeTracker.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "masterlatest",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/NetBeansProject/StudentGradeTracker",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AddFacultyUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StudentGradeTracker.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;masterlatest&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/NetBeansProject/StudentGradeTracker&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="AddFacultyUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sgt.UI.AddFacultyUI" />
+      <module name="StudentGradeTracker" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sgt.UI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <module name="" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AddFacultyUI" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.33514.17" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.33514.17" />
       </set>
     </attachedChunks>
   </component>
@@ -83,7 +178,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1777876113013</updated>
-      <workItem from="1778496562048" duration="1547000" />
+      <workItem from="1778496562048" duration="2121000" />
+      <workItem from="1778499547052" duration="298000" />
+      <workItem from="1778500618799" duration="305000" />
+      <workItem from="1778500996593" duration="74000" />
+      <workItem from="1778501119247" duration="144000" />
+      <workItem from="1778501756312" duration="414000" />
+      <workItem from="1778509444842" duration="81000" />
     </task>
     <task id="LOCAL-00001" summary="Commit in intelliJ">
       <option name="closed" value="true" />
@@ -93,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778498431638</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Commit in intelliJ">
+      <option name="closed" value="true" />
+      <created>1778498662167</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778498662167</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -19,8 +19,8 @@ public class TableHelper {
              PreparedStatement pst = con.prepareStatement(query);
              ) {
             
-            if(param != null && !param.isEmpty()){
-                pst.setString(1, param + "%");
+                if (param != null) {
+                pst.setObject(1, param); 
             }
             try(ResultSet rs = pst.executeQuery()){
             table.setModel(DbUtils.resultSetToTableModel(rs));

@@ -3,17 +3,16 @@ package sgt.model;
 public class Grade {
     private int gradeId;
     private int studentId;
-    private String subjectCode;
+    private int subjectId;
     private double rawGrade;
     private double gwa;
     private int facultyId;
-    private int adminId;
 
     public Grade() {}
 
-    public Grade(int studentId, String subjectCode, double rawGrade, double gwa, int facultyId) {
+    public Grade(int studentId, int subjectId, double rawGrade, double gwa, int facultyId) {
         this.studentId = studentId;
-        this.subjectCode = subjectCode;
+        this.subjectId = subjectId;
         this.rawGrade = rawGrade;
         this.gwa = gwa;
         this.facultyId = facultyId;
@@ -26,8 +25,8 @@ public class Grade {
     public int getStudentId() { return studentId; }
     public void setStudentId(int studentId) { this.studentId = studentId; }
 
-    public String getSubjectCode() { return subjectCode; }
-    public void setSubjectCode(String subjectCode) { this.subjectCode = subjectCode; }
+    public int getSubjectId() { return subjectId; }
+    public void setSubjectId(int subjectId) { this.subjectId = subjectId; }
 
     public double getRawGrade() { return rawGrade; }
     public void setRawGrade(double rawGrade) { this.rawGrade = rawGrade; }

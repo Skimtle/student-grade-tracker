@@ -238,7 +238,7 @@ public class DashboardFaculty extends javax.swing.JFrame {
     }//GEN-LAST:event_ProgramManagementActionPerformed
 
     private void GradesManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GradesManagementActionPerformed
-        // TODO add your handling code here:
+        WindowHelper.openWindow(this, new Grade_Management());// TODO add your handling code here:
     }//GEN-LAST:event_GradesManagementActionPerformed
 
     private void StudentGradeSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentGradeSummaryActionPerformed

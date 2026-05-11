@@ -22,7 +22,7 @@ public class GradeDAO {
     public List<String> searchStudents(String query) {
         List<String> results = new ArrayList<>();
 
-        String sql = "SELECT student_no, first_name, last_name FROM tbl_students WHERE student_no LIKE ? OR last_name LIKE ?";
+        String sql = "SELECT student_number, first_name, last_name FROM tbl_students WHERE student_no LIKE ? OR last_name LIKE ?";
 
         try (Connection con = sgt.session.SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -32,7 +32,7 @@ public class GradeDAO {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                String studentNo = rs.getString("student_no");
+                String studentNo = rs.getString("student_number");
                 String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
                 results.add(studentNo + " - " + fullName);
             }
@@ -42,7 +42,7 @@ public class GradeDAO {
         return results;
     }
     public boolean saveGrade(Grade grade) {
-        String sql = "INSERT INTO tbl_grades (student_id, subject_code, raw_grade, gwa, faculty_id) " +
+        String sql = "INSERT INTO tbl_grades (student_id, subject_id, raw_grade, gwa_grade, faculty_id)" +
                 "VALUES (?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE raw_grade = VALUES(raw_grade), gwa = VALUES(gwa), faculty_id = VALUES(faculty_id)";
 
@@ -50,7 +50,7 @@ public class GradeDAO {
              PreparedStatement pst = con.prepareStatement(sql)) {
 
             pst.setInt(1, grade.getStudentId());
-            pst.setString(2, grade.getSubjectCode());
+            pst.setInt(2, grade.getSubjectId());
             pst.setDouble(3, grade.getRawGrade());
             pst.setDouble(4, grade.getGwa());
             pst.setInt(5, grade.getFacultyId());
@@ -62,4 +62,5 @@ public class GradeDAO {
             return false;
         }
     }
+    
 }
