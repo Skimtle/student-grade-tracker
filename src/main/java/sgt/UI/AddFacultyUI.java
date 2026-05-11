@@ -47,7 +47,7 @@ public class AddFacultyUI extends javax.swing.JFrame {
         tbl_faculty = new javax.swing.JTable();
         back = new javax.swing.JButton();
         Update = new javax.swing.JButton();
-        AddFac1 = new javax.swing.JButton();
+        Clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +87,11 @@ public class AddFacultyUI extends javax.swing.JFrame {
                 "Full Name", "Username", "Password"
             }
         ));
+        tbl_faculty.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_facultyMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_faculty);
 
         back.setText("back");
@@ -96,9 +101,9 @@ public class AddFacultyUI extends javax.swing.JFrame {
         Update.setText("Update");
         Update.addActionListener(this::UpdateActionPerformed);
 
-        AddFac1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        AddFac1.setText("Clear");
-        AddFac1.addActionListener(this::AddFac1ActionPerformed);
+        Clear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Clear.setText("Clear");
+        Clear.addActionListener(this::ClearActionPerformed);
 
         javax.swing.GroupLayout AddFacultyLayout = new javax.swing.GroupLayout(AddFaculty);
         AddFaculty.setLayout(AddFacultyLayout);
@@ -134,7 +139,7 @@ public class AddFacultyUI extends javax.swing.JFrame {
                                 .addComponent(AddFac, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(AddFacultyLayout.createSequentialGroup()
                                 .addGap(76, 76, 76)
-                                .addComponent(AddFac1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Clear, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +165,7 @@ public class AddFacultyUI extends javax.swing.JFrame {
                     .addComponent(AddFac)
                     .addComponent(Update))
                 .addGap(18, 18, 18)
-                .addComponent(AddFac1)
+                .addComponent(Clear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(back)
                 .addGap(24, 24, 24))
@@ -247,35 +252,48 @@ public class AddFacultyUI extends javax.swing.JFrame {
         return;
     }
 
+    String oldUsername = tbl_faculty.getValueAt(row, 1).toString(); // original username
     String fullName = full_Name1.getText().trim();
     String uname = username.getText().trim();
     String pword = password.getText().trim();
-    String facultyId = tbl_faculty.getValueAt(row, 0).toString(); // assuming first column is ID
 
     if (fullName.isEmpty() || uname.isEmpty() || pword.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
         return;
     }
 
-    String sql = "UPDATE tbl_faculty SET full_name = ?, username = ?, password = ? WHERE faculty_id = ?";
-    boolean success = DatabaseHelper.executeUpdate(sql, fullName, uname, pword, facultyId);
+    String sql = "UPDATE tbl_faculty SET full_name = ?, username = ?, password = ? WHERE username = ?";
+    boolean success = DatabaseHelper.executeUpdate(sql, fullName, uname, pword, oldUsername);
 
     if (success) {
         javax.swing.JOptionPane.showMessageDialog(this, "Faculty updated successfully!");
         populate_table();
+        AddFac.setEnabled(true);
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Update failed.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }// TODO add your handling code here:
     }//GEN-LAST:event_UpdateActionPerformed
 
-    private void AddFac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFac1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddFac1ActionPerformed
+    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
+    sgt.util.UIHelper.clearComponents(full_Name1, username, password, tbl_faculty);
+    AddFac.setEnabled(true);// TODO add your handling code here:
+    }//GEN-LAST:event_ClearActionPerformed
+
+    private void tbl_facultyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_facultyMouseClicked
+        int row = tbl_faculty.getSelectedRow();
+    if (row != 1) {
+        full_Name1.setText(tbl_faculty.getValueAt(row, 0).toString()); // Full Name
+        username.setText(tbl_faculty.getValueAt(row, 1).toString());   // Username
+        password.setText(tbl_faculty.getValueAt(row, 2).toString());   // Password
+
+        AddFac.setEnabled(false); // disable Add when editing
+    } // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_facultyMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddFac;
-    private javax.swing.JButton AddFac1;
     private javax.swing.JPanel AddFaculty;
+    private javax.swing.JButton Clear;
     private javax.swing.JLabel Name;
     private javax.swing.JLabel Pass;
     private javax.swing.JButton Update;
