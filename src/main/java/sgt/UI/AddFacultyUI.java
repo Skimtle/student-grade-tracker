@@ -46,6 +46,8 @@ public class AddFacultyUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_faculty = new javax.swing.JTable();
         back = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        AddFac1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,38 +92,51 @@ public class AddFacultyUI extends javax.swing.JFrame {
         back.setText("back");
         back.addActionListener(this::backActionPerformed);
 
+        Update.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Update.setText("Update");
+        Update.addActionListener(this::UpdateActionPerformed);
+
+        AddFac1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        AddFac1.setText("Clear");
+        AddFac1.addActionListener(this::AddFac1ActionPerformed);
+
         javax.swing.GroupLayout AddFacultyLayout = new javax.swing.GroupLayout(AddFaculty);
         AddFaculty.setLayout(AddFacultyLayout);
         AddFacultyLayout.setHorizontalGroup(
             AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AddFacultyLayout.createSequentialGroup()
                 .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AddFacultyLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddFacultyLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddFacultyLayout.createSequentialGroup()
-                                .addGap(151, 151, 151)
-                                .addComponent(AddFac, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))
                             .addGroup(AddFacultyLayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
                                 .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(AddFacultyLayout.createSequentialGroup()
-                                        .addComponent(Pass)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
-                                    .addGroup(AddFacultyLayout.createSequentialGroup()
-                                        .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(usrnme)
-                                            .addComponent(Name))
-                                        .addGap(28, 28, 28)
-                                        .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(full_Name1)
-                                            .addComponent(username))))))
-                        .addGap(18, 18, 18))
+                                    .addComponent(usrnme)
+                                    .addComponent(Name))
+                                .addGap(28, 28, 28)
+                                .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(full_Name1)
+                                    .addComponent(username)))
+                            .addGroup(AddFacultyLayout.createSequentialGroup()
+                                .addComponent(Pass)
+                                .addGap(32, 32, 32)
+                                .addComponent(password))))
                     .addGroup(AddFacultyLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(back)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 215, Short.MAX_VALUE))
+                    .addGroup(AddFacultyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddFacultyLayout.createSequentialGroup()
+                                .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                .addComponent(AddFac, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AddFacultyLayout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(AddFac1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -136,12 +151,16 @@ public class AddFacultyUI extends javax.swing.JFrame {
                 .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usrnme)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Pass)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(AddFac)
+                .addGroup(AddFacultyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddFac)
+                    .addComponent(Update))
+                .addGap(18, 18, 18)
+                .addComponent(AddFac1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(back)
                 .addGap(24, 24, 24))
@@ -221,11 +240,45 @@ public class AddFacultyUI extends javax.swing.JFrame {
         } // TODO add your handling code here:
     }//GEN-LAST:event_backActionPerformed
 
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        int row = tbl_faculty.getSelectedRow();
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a faculty from the table first!");
+        return;
+    }
+
+    String fullName = full_Name1.getText().trim();
+    String uname = username.getText().trim();
+    String pword = password.getText().trim();
+    String facultyId = tbl_faculty.getValueAt(row, 0).toString(); // assuming first column is ID
+
+    if (fullName.isEmpty() || uname.isEmpty() || pword.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    String sql = "UPDATE tbl_faculty SET full_name = ?, username = ?, password = ? WHERE faculty_id = ?";
+    boolean success = DatabaseHelper.executeUpdate(sql, fullName, uname, pword, facultyId);
+
+    if (success) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Faculty updated successfully!");
+        populate_table();
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Update failed.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void AddFac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFac1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddFac1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddFac;
+    private javax.swing.JButton AddFac1;
     private javax.swing.JPanel AddFaculty;
     private javax.swing.JLabel Name;
     private javax.swing.JLabel Pass;
+    private javax.swing.JButton Update;
     private javax.swing.JButton back;
     private javax.swing.JTextField full_Name1;
     private javax.swing.JScrollPane jScrollPane1;
