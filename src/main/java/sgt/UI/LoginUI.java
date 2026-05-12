@@ -8,6 +8,7 @@ import java.awt.Color;
 import sgt.dao.loginUIDAO;
 import sgt.model.users;
 import sgt.util.WindowHelper;
+import sgt.session.UserSession;
 
 
 
@@ -246,6 +247,7 @@ public class LoginUI extends javax.swing.JFrame {
         String uname = jTextField1.getText();
         String pword = new String(jPasswordField1.getPassword());//update
         String tableName="";
+        String role = "";
         
         if(uname.trim().isEmpty() || pword.trim().isEmpty()){
             JOptionPane.showMessageDialog(rootPane, "Some Fields are Empty!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -257,27 +259,31 @@ public class LoginUI extends javax.swing.JFrame {
         }
         if(jComboBox1.getSelectedIndex() == 1){
             tableName = "tbl_faculty";
+            role = "faculty";
         } else {
             tableName = "tbl_admin";
+            role = "admin";
         }
         
         loginUIDAO dao = new loginUIDAO();
         users user = dao.login(uname, pword, tableName);
 
         if (user != null) {
-            sgt.session.UserSession.setCurrentUser(user.getfullName());
             JOptionPane.showMessageDialog(this, "Login Successful!");
-            if (tableName.equals("tbl_faculty")) {
-                WindowHelper.openWindow(this, new DashboardFaculty());
-            }else {
-                sgt.session.UserSession.setCurrentRole("admin"); // Added by Cii
-               WindowHelper.openWindow(this, new DashboardAdmin());
-}
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
-            jPasswordField1.setText("");
-        }
+            
+            UserSession.setSession(user.getId(), user.getfullName(), role);
+            
+            if(role.equals("faculty")){
+                WindowHelper.openWindow(this, new DashboardFaculty(UserSession.getCurrentUser()));
+            } else {
+                WindowHelper.openWindow(this, new DashboardAdmin(UserSession.getCurrentUser()));
+            }
+            
+            dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                jPasswordField1.setText("");
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
