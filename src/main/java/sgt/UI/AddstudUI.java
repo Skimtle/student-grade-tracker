@@ -52,7 +52,7 @@ public class AddstudUI extends javax.swing.JFrame {
      */
     
     private void populate_table(){
-        TableHelper.updateTable(tbl_students, BASE_STUDENT_QUERY, "");
+        TableHelper.updateTable(tbl_students, BASE_STUDENT_QUERY);
         }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -335,7 +335,7 @@ public class AddstudUI extends javax.swing.JFrame {
     private void tbl_studentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_studentsMouseClicked
         int row = tbl_students.getSelectedRow();
         
-        if(row != 1){
+        if(row != -1){
             fname.setText(tbl_students.getValueAt(row, 1).toString());
             lname.setText(tbl_students.getValueAt(row, 2).toString());
             

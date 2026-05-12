@@ -14,6 +14,11 @@ import sgt.session.SQLconnection;
  * @author Skimtle
  */
 public class TableHelper {
+    
+    public static void updateTable(JTable table, String query) {
+        updateTable(table, query, null); // Just calls the other version with null
+    }
+    
     public static void updateTable(JTable table, String query, String param){
         try (Connection con = SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query);

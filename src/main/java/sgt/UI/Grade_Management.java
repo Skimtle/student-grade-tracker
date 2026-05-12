@@ -4,12 +4,19 @@
  */
 package sgt.UI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import sgt.session.UserSession;
 import sgt.util.WindowHelper;
-import sgt.util.TableHelper;
 
 
 
@@ -20,32 +27,143 @@ import sgt.util.TableHelper;
 public class Grade_Management extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Grade_Management.class.getName());
-
+    private JPopupMenu suggestionPopup;
+    private JList<String> suggestionList;
+    private DefaultListModel<String> listModel;
     /**
      * Creates new form Grade_Management
      */
     public Grade_Management() {
         initComponents();
+        initSearchSuggestions();
+        loadAllGrades();
         Grade.setEnabled(false);
         Grade.setBackground(java.awt.Color.LIGHT_GRAY); 
         loadSubjectDropdown();
+        checkInputs();
     
-        StudentNumber.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-            @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) { runSearchLogic(); }
-            @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) { runSearchLogic(); }
-            @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) { runSearchLogic(); }
+        StudentNumber.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) { updateSuggestions(); }
+            public void removeUpdate(DocumentEvent e) { updateSuggestions(); }
+            public void insertUpdate(DocumentEvent e) { updateSuggestions(); }
 
-            private void runSearchLogic() {
+            private void updateSuggestions() {
                 String text = StudentNumber.getText().trim();
-                if (text.length() >= 3) {
-                    searchStudent(text);
+                if (text.length() >= 2) { // Show suggestions after 2 characters
+                    showSuggestions(text);
+                } else {
+                    suggestionPopup.setVisible(false);
                 }
-                checkInputs();
+                checkInputs(); // Call unused method to toggle Grade field
             }
         });
+        Subject.addActionListener(e -> checkInputs());
+    }
+    
+    private void initSearchSuggestions() {
+        suggestionPopup = new JPopupMenu();
+        listModel = new DefaultListModel<>();
+        suggestionList = new JList<>(listModel);
+        
+        suggestionPopup.setFocusable(false);
+        suggestionPopup.add(new JScrollPane(suggestionList));
+
+        // When a student number is clicked in the dropdown
+        suggestionList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    String selected = suggestionList.getSelectedValue();
+                    StudentNumber.setText(selected);
+                    suggestionPopup.setVisible(false);
+                    searchStudent(selected); // Automatically trigger search
+                }
+            }
+        });
+    }
+    
+    private void showSuggestions(String text) {
+        listModel.removeAllElements();
+        String sql = "SELECT student_number FROM tbl_students WHERE student_number LIKE ?";
+        
+        try (Connection con = sgt.session.SQLconnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            
+            pst.setString(1, text + "%");
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                listModel.addElement(rs.getString("student_number"));
+            }
+
+            if (listModel.getSize() > 0) {
+                suggestionPopup.show(StudentNumber, 0, StudentNumber.getHeight());
+                StudentNumber.requestFocus(); // Keep focus on textfield
+            } else {
+                suggestionPopup.setVisible(false);
+            }
+        } catch (Exception ex) {
+            System.out.println("Suggestion Error: " + ex);
+        }
+    }
+    
+    private void loadAllGrades() {
+        String sql ="SELECT s.student_number, " +
+                 "CONCAT(s.first_name, ' ', s.last_name) AS full_name, " +
+                 "p.program_code, " +
+                 "sub.subject_code, " +
+                 "sub.subject_name, " +
+                 "g.raw_grade, " +
+                 "g.gwa_grade " +
+                 "FROM tbl_grades g " +
+                 "JOIN tbl_students s ON g.student_id = s.student_id " +
+                 "JOIN tbl_subjects sub ON g.subject_id = sub.subject_id " +
+                 "JOIN tbl_programs p ON s.program_id = p.program_id " +
+                 "ORDER BY s.student_number, sub.subject_code";
+        
+        // Using your existing TableHelper
+        sgt.util.TableHelper.updateTable(tbl_students, sql);
+    }
+    
+    private void searchStudent(String studentNumber) {
+        String sql = "SELECT student_id, first_name, last_name FROM tbl_students WHERE student_number = ?";
+
+        try (Connection con = sgt.session.SQLconnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            
+            pst.setString(1, studentNumber);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+                FullName.setText(fullName);
+                
+                // Filter table for this specific student
+                loadFilteredGrades(rs.getInt("student_id"));
+            } else {
+                FullName.setText("Student not found!");
+                loadAllGrades(); // Revert to showing all if search fails
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    private void loadFilteredGrades(int studentId) {
+        String sql ="SELECT s.student_number, " +
+                    "CONCAT(s.first_name, ' ', s.last_name) AS full_name, " +
+                    "p.program_code, " +
+                    "sub.subject_code, " +
+                    "sub.subject_name, " +
+                    "g.raw_grade, " +
+                    "g.gwa_grade " +
+                    "FROM tbl_grades g " +
+                    "JOIN tbl_students s ON g.student_id = s.student_id " +
+                    "JOIN tbl_subjects sub ON g.subject_id = sub.subject_id " +
+                    "JOIN tbl_programs p ON s.program_id = p.program_id " +
+                    "WHERE g.student_id = ? " +
+                    "ORDER BY sub.subject_code";
+        
+        sgt.util.TableHelper.updateTable(tbl_students, sql, String.valueOf(studentId));
     }
     
     private void loadSubjectDropdown() {
@@ -70,28 +188,6 @@ public class Grade_Management extends javax.swing.JFrame {
         }
     }
     
-    private void searchStudent(String studentNumber) {
-        String sql = "SELECT student_id, first_name, last_name FROM tbl_students WHERE student_number = ?";
-
-        try {
-            Connection con = sgt.session.SQLconnection.getConnection();
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, studentNumber);
-            ResultSet rs = pst.executeQuery();
-
-            if(rs.next()){
-                String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
-                FullName.setText(fullName);
-                loadStudentGrades(rs.getInt("student_id"));
-            } else {
-                FullName.setText("Student not found!");
-                clearGradeTable();
-            }
-        } catch(Exception ex){
-            System.out.println(ex);
-        }
-    }
-    
     private void loadStudentGrades(int studentId) {
         String sql = "SELECT sub.subject_code, sub.subject_name, g.raw_grade, g.gwa_grade " +
                      "FROM tbl_grades g " +
@@ -102,7 +198,7 @@ public class Grade_Management extends javax.swing.JFrame {
 
     private void checkInputs() {
         boolean hasStudent = !StudentNumber.getText().trim().isEmpty();
-        boolean hasSubject = Subject.getSelectedIndex() != -1;
+        boolean hasSubject = Subject.getSelectedIndex() > 0;
     
         if (hasStudent && hasSubject) {
             Grade.setEnabled(true);
@@ -327,17 +423,20 @@ public class Grade_Management extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+       if (StudentNumber.getText().isEmpty() || Subject.getSelectedIndex() <= 0) {
+             javax.swing.JOptionPane.showMessageDialog(this, "Please select a grade from the table to delete.");
+             return;
+        }
+
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Delete this grade?", "Confirm", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            String studentNum = StudentNumber.getText().trim();
-            String selected = Subject.getSelectedItem().toString();
-            int studentId = getStudentId(studentNum);
-            int subjectId = Integer.parseInt(selected.split(" - ")[0]);
+            int studentId = getStudentId(StudentNumber.getText().trim());
+            int subjectId = Integer.parseInt(Subject.getSelectedItem().toString().split(" - ")[0]);
 
             String sql = "DELETE FROM tbl_grades WHERE student_id = ? AND subject_id = ?";
             if (sgt.util.DatabaseHelper.executeUpdate(sql, studentId, subjectId)) {
-                loadStudentGrades(studentId);
-                updateGWA();
+                javax.swing.JOptionPane.showMessageDialog(this, "Grade Deleted.");
+                loadStudentGrades(studentId); // Refresh UI
             }
         }
     }//GEN-LAST:event_deleteActionPerformed
@@ -368,60 +467,36 @@ public class Grade_Management extends javax.swing.JFrame {
         String studentNum = StudentNumber.getText().trim();
         String gradeText = Grade.getText().trim();
 
-        
-        if(studentNum.isEmpty() || gradeText.isEmpty() || Subject.getSelectedIndex() == 0){
+        if(studentNum.isEmpty() || gradeText.isEmpty() || Subject.getSelectedIndex() <= 0){
             javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields!");
             return;
         }
 
-        
-        double rawGrade;
         try {
-            rawGrade = Double.parseDouble(gradeText);
+            double rawGrade = Double.parseDouble(gradeText);
             if(rawGrade < 75 || rawGrade > 100){
-                javax.swing.JOptionPane.showMessageDialog(this, "Grade must be between 75 and 100!");
+                javax.swing.JOptionPane.showMessageDialog(this, "Grade must be 75-100!");
                 return;
             }
+
+            int studentId = getStudentId(studentNum);
+            int subjectId = Integer.parseInt(Subject.getSelectedItem().toString().split(" - ")[0]);
+            double gwaGrade = new sgt.dao.GradeDAO().convertRawToGWA(rawGrade);
+
+            String sql = "INSERT INTO tbl_grades (student_id, subject_id, raw_grade, gwa_grade, faculty_id, admin_id) VALUES (?, ?, ?, ?, ?, ?)";
+            int currentId = UserSession.getUserId();
+            String role = UserSession.getCurrentRole();
+
+            Object facultyId = "faculty".equals(role) ? currentId : null;
+            Object adminId = "admin".equals(role) ? currentId : null;
+
+            if(sgt.util.DatabaseHelper.executeUpdate(sql, studentId, subjectId, rawGrade, gwaGrade, facultyId, adminId)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Grade saved!");
+                loadStudentGrades(studentId);
+                Grade.setText("");
+            }
         } catch(NumberFormatException e){
-            javax.swing.JOptionPane.showMessageDialog(this, "Grade must be a number!");
-            return;
-        }
-
-        
-        sgt.dao.GradeDAO gradeDAO = new sgt.dao.GradeDAO();
-        double gwaGrade = gradeDAO.convertRawToGWA(rawGrade);
-
-        
-        String selected = Subject.getSelectedItem().toString();
-        int subjectId = Integer.parseInt(selected.split(" - ")[0]);
-
-        
-        int studentId = getStudentId(studentNum);
-        if(studentId == -1){
-            javax.swing.JOptionPane.showMessageDialog(this, "Student not found!");
-            return;
-        }
-
-        // Step 6 - get faculty/admin id from session
-        int currentId = sgt.session.UserSession.getUserId();
-        String role = sgt.session.UserSession.getCurrentRole();
-
-        // Step 7 - insert into database
-        String sql = "INSERT INTO tbl_grades (student_id, subject_id, raw_grade, gwa_grade, faculty_id, admin_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-
-        Integer facultyId = "faculty".equals(role) ? currentId : null;
-        Integer adminId = "admin".equals(role) ? currentId : null;
-
-        boolean success = sgt.util.DatabaseHelper.executeUpdate(sql, 
-            studentId, subjectId, rawGrade, gwaGrade, facultyId, adminId);
-
-        if(success){
-            javax.swing.JOptionPane.showMessageDialog(this, "Grade added! GWA: " + gwaGrade);
-            loadStudentGrades(studentId);
-            Grade.setText("");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Failed to save grade!");
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid grade format!");
         }
     }//GEN-LAST:event_addActionPerformed
 
@@ -448,11 +523,26 @@ public class Grade_Management extends javax.swing.JFrame {
 
     private void tbl_studentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_studentsMouseClicked
         int row = tbl_students.getSelectedRow();
-        if (row != -1) {
-            // Assuming column 0 is Student Number
-            StudentNumber.setText(tbl_students.getValueAt(row, 0).toString());
-            // Populate other fields...
-        }
+            if (row != -1) {
+                // Mapping: 0=StudNum, 3=SubCode, 5=RawGrade
+                String sNum = tbl_students.getValueAt(row, 0).toString();
+                String subCode = tbl_students.getValueAt(row, 3).toString();
+                String rawGrade = tbl_students.getValueAt(row, 5).toString();
+
+                StudentNumber.setText(sNum);
+                Grade.setText(rawGrade);
+
+                // Loop through ComboBox to match the Subject Code
+                for (int i = 0; i < Subject.getItemCount(); i++) {
+                    if (Subject.getItemAt(i).toString().contains(subCode)) {
+                        Subject.setSelectedIndex(i);
+                        break;
+                    }
+                }
+
+                // Refresh the student search to update the name labels/GWA
+                searchStudent(sNum);
+            }
     }//GEN-LAST:event_tbl_studentsMouseClicked
 
     /**
