@@ -31,22 +31,25 @@ public class subjectDAO {
         }
     }
     
-    public boolean updateSubjects(Subject s) {
-        String sql = "UPDATE tbl_subjects SET subject_code = ?, subject_name = ? WHERE subject_id = ?";
+   public boolean updateSubjects(Subject s) {
+        String sql = "UPDATE tbl_subjects SET subject_code = ?, subject_name = ?, " +
+                     "room_number = ?, program = ? WHERE subject_id = ?"; 
         try (Connection con = SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setString(1, s.getSubjectCode());
             pst.setString(2, s.getSubjectName());
-            pst.setInt(3, s.getId());
+            pst.setString(3, s.getRoomNumber());                        
+            pst.setString(4, s.getProgram());                          
+            pst.setInt(5, s.getId());
             return pst.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
-    
+
     public boolean deleteSubjects(int id) {
-        String sql = "DELETE FROM tbl_subjects WHERE subject_id = ?";
+        String sql = "DELETE FROM tbl_subjects WHERE subject_id = ?"; 
         try (Connection con = SQLconnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setInt(1, id);
@@ -56,5 +59,4 @@ public class subjectDAO {
             return false;
         }
     }
-    
 }

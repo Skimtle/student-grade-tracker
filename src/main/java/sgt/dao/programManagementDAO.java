@@ -12,30 +12,32 @@ import sgt.model.Program;
  * @author Skimtle
  */
 public class programManagementDAO {
-    public boolean addProgram(Program p) {
-        String sql = "INSERT INTO tbl_programs (program_code, program_name) VALUES (?, ?)";
-        try (Connection con = SQLconnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setString(1, p.getCode());
-            pst.setString(2, p.getName());
-            return pst.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            return false;
-        }
+    public boolean addProgram(String code, String name) {
+    String sql = "INSERT INTO tbl_programs (program_code, program_name) VALUES (?, ?)";
+    try (Connection con = sgt.session.SQLconnection.getConnection();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+        pst.setString(1, code);
+        pst.setString(2, name);
+        return pst.executeUpdate() > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
     }
-    
-    public boolean updateProgram(Program p) {
-        String sql = "UPDATE tbl_programs SET program_code = ?, program_name = ? WHERE program_id = ?";
-        try (Connection con = SQLconnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setString(1, p.getCode());
-            pst.setString(2, p.getName());
-            pst.setInt(3, p.getId());
-            return pst.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            return false;
-        }
+}
+
+public boolean updateProgram(int id, String code, String name) {
+    String sql = "UPDATE tbl_programs SET program_code = ?, program_name = ? WHERE program_id = ?";
+    try (Connection con = sgt.session.SQLconnection.getConnection();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+        pst.setString(1, code);
+        pst.setString(2, name);
+        pst.setInt(3, id);
+        return pst.executeUpdate() > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
     }
+}
     
     public boolean deleteProgram(int id) {
         String sql = "DELETE FROM tbl_programs WHERE program_id = ?";
