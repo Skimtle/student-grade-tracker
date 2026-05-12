@@ -23,8 +23,9 @@ public class AddstudUI extends javax.swing.JFrame {
         "s.last_name as 'Last Name', " +
         "s.year_level as 'Year', " +
         "p.program_code as 'Program', " + 
-        "s.faculty_id as 'Faculty ID', " +
-        "s.admin_id as 'Admin ID' " +
+        "s.age as 'Age', " +
+        "s.address as 'Address', " +
+        "s.date_of_birth as 'Birthdate' " +
         "FROM tbl_students s " +
         "JOIN tbl_programs p ON s.program_id = p.program_id";
     
@@ -305,42 +306,36 @@ public class AddstudUI extends javax.swing.JFrame {
 
     private void AddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStudentActionPerformed
         String firstName = fname.getText().trim();
-        String lastName = lname.getText().trim();
-        int yearValue = yrlevel.getSelectedIndex() + 1;
-        String studentNum = sgt.service.StudentService.generateNextID();
-        
-        String selectedProgram = program.getSelectedItem().toString();
-        int programId = sgt.service.StudentService.getProgramId(selectedProgram);
-           
-        int currentId = sgt.session.UserSession.getUserId();
-        String role = sgt.session.UserSession.getCurrentRole();
-        
-        Integer fId = null; //facultyId
-        Integer aId = null; //adminId
-        
-        if("faculty".equals(role)){
-            fId = currentId;
-        } else {
-            aId = currentId;
-        }
-        
-        if (firstName.isEmpty() || lastName.isEmpty()) {
+    String lastName = lname.getText().trim();
+    String age = lname1.getText().trim();          
+    String birthday = lname2.getText().trim();      
+    String address = lname3.getText().trim();       
+    int yearValue = yrlevel.getSelectedIndex() + 1;
+    String studentNum = sgt.service.StudentService.generateNextID();
+    String selectedProgram = program.getSelectedItem().toString();
+    int programId = sgt.service.StudentService.getProgramId(selectedProgram);
+
+    int currentId = sgt.session.UserSession.getUserId();
+    String role = sgt.session.UserSession.getCurrentRole();
+    Integer fId = "faculty".equals(role) ? currentId : null;
+    Integer aId = "admin".equals(role) ? currentId : null;
+
+    if (firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || birthday.isEmpty() || address.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
-        }
+    }
 
-        sgt.model.Student newStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, fId, aId);
-        sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
-        boolean success = dao.addStudent(newStudent);
-        
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Student added successfully!");
-            fname.setText("");
-            lname.setText("");
-            populate_table(); // Refresh the table
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to save to database.");
-        }
+    sgt.model.Student newStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, age, birthday, address, fId, aId);
+    sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
+
+    if (dao.addStudent(newStudent)) {
+        JOptionPane.showMessageDialog(this, "Student added successfully!");
+        fname.setText(""); lname.setText("");
+        lname1.setText(""); lname2.setText(""); lname3.setText("");
+        populate_table();
+    } else {
+        JOptionPane.showMessageDialog(this, "Failed to save to database.");
+    }
         
     }//GEN-LAST:event_AddStudentActionPerformed
 
@@ -385,19 +380,22 @@ public class AddstudUI extends javax.swing.JFrame {
 
     private void tbl_studentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_studentsMouseClicked
         int row = tbl_students.getSelectedRow();
-        
-        if(row != 1){
-            fname.setText(tbl_students.getValueAt(row, 1).toString());
-            lname.setText(tbl_students.getValueAt(row, 2).toString());
-            
-            String year = tbl_students.getValueAt(row, 3).toString();
-            yrlevel.setSelectedItem(year);
-            
-            String programName = tbl_students.getValueAt(row, 4).toString();
-            program.setSelectedItem(programName);
-            
-            AddStudent.setEnabled(false);
-        }
+    if (row != -1) {
+        fname.setText(tbl_students.getValueAt(row, 1).toString());   
+        lname.setText(tbl_students.getValueAt(row, 2).toString());   
+
+        String year = tbl_students.getValueAt(row, 3).toString();
+        yrlevel.setSelectedItem(year);
+
+        String programName = tbl_students.getValueAt(row, 4).toString();
+        program.setSelectedItem(programName);
+
+        lname1.setText(tbl_students.getValueAt(row, 5).toString());
+        lname2.setText(tbl_students.getValueAt(row, 7).toString());  
+        lname3.setText(tbl_students.getValueAt(row, 6).toString());  
+
+        AddStudent.setEnabled(false);
+    }
     }//GEN-LAST:event_tbl_studentsMouseClicked
 
     private void DeleteSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSearchActionPerformed
@@ -421,38 +419,42 @@ public class AddstudUI extends javax.swing.JFrame {
 
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         int row = tbl_students.getSelectedRow();
-        if (row == -1) { 
-            JOptionPane.showMessageDialog(this, "Please select a student from the table first!");
-            AddStudent.setEnabled(false);
-            return;
-        }
-        String firstName = fname.getText().trim();
-        String lastName = lname.getText().trim();
-        int yearValue = yrlevel.getSelectedIndex() + 1;
-        String selectedProgram = program.getSelectedItem().toString();
-        int programId = sgt.service.StudentService.getProgramId(selectedProgram);
-        String studentNum = tbl_students.getValueAt(row, 0).toString();
-        
-        int currentId = sgt.session.UserSession.getUserId();
-        String role = sgt.session.UserSession.getCurrentRole();
-        Integer fId = "faculty".equals(role) ? currentId : null;
-        Integer aId = "admin".equals(role) ? currentId : null;
-        
-        if (firstName.isEmpty() || lastName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }
-        
-        sgt.model.Student updatedStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, fId, aId);
-        sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
-        
-        if (dao.updateStudent(updatedStudent)) {
-            JOptionPane.showMessageDialog(this, "Student updated successfully!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(fname, lname, yrlevel, program, tbl_students);
-        } else {
-            JOptionPane.showMessageDialog(this, "Update failed.");
-        }
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a student first!");
+        return;
+    }
+
+    String firstName = fname.getText().trim();
+    String lastName = lname.getText().trim();
+    String age = lname1.getText().trim();           
+    String birthday = lname2.getText().trim();      
+    String address = lname3.getText().trim();       
+    int yearValue = yrlevel.getSelectedIndex() + 1;
+    String selectedProgram = program.getSelectedItem().toString();
+    int programId = sgt.service.StudentService.getProgramId(selectedProgram);
+    String studentNum = tbl_students.getValueAt(row, 0).toString();
+
+    int currentId = sgt.session.UserSession.getUserId();
+    String role = sgt.session.UserSession.getCurrentRole();
+    Integer fId = "faculty".equals(role) ? currentId : null;
+    Integer aId = "admin".equals(role) ? currentId : null;
+
+    if (firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || birthday.isEmpty() || address.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    sgt.model.Student updatedStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, age, birthday, address, fId, aId);
+    sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
+
+    if (dao.updateStudent(updatedStudent)) {
+        JOptionPane.showMessageDialog(this, "Student updated successfully!");
+        populate_table();
+        sgt.util.UIHelper.clearComponents(fname, lname, yrlevel, program, tbl_students);
+        lname1.setText(""); lname2.setText(""); lname3.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "Update failed.");
+    }
     }//GEN-LAST:event_UpdateActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed

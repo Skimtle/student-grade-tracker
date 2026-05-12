@@ -69,13 +69,8 @@
                                   <Component id="StudentGradeSummary" min="-2" pref="261" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="GradesManagement" alignment="0" min="-2" pref="261" max="-2" attributes="0"/>
-                                      <Component id="FacultyManagement" alignment="0" min="-2" pref="261" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="215" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="GradesManagement" alignment="0" min="-2" pref="261" max="-2" attributes="0"/>
+                              <Component id="FacultyManagement" alignment="0" min="-2" pref="261" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
                           <Component id="EnrolledStudents" min="-2" pref="379" max="-2" attributes="0"/>
@@ -98,10 +93,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="Q1" pref="70" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="StudentManagement" alignment="3" min="-2" pref="130" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="FacultyManagement" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="EnrolledStudents" alignment="3" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="StudentManagement" alignment="3" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="EnrolledStudents" alignment="3" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">

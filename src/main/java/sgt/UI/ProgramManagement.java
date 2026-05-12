@@ -187,53 +187,51 @@ public class ProgramManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int row = jTable1.getSelectedRow();
-        
-        if (row == -1){
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select a program from the table to update!");
-            return;            
-        }
-        
-        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
-        String code = jTextField1.getText().trim();
-        String name = jTextField3.getText().trim();
-        
-        if (code.isEmpty() || name.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }    
-        
-        sgt.model.Subject updatedSubjects = new sgt.model.Subject(id, code, name);
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
-        
-        if (dao.updateSubjects(updatedSubjects)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Subject updated successfully!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
-            jButton3.setEnabled(true);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Update failed. Check database connection.");
+         int row = jTable1.getSelectedRow();
+
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a program to update!");
+        return;
+    }
+
+    int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+    String code = jTextField1.getText().trim();
+    String name = jTextField3.getText().trim();
+
+    if (code.isEmpty() || name.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    sgt.dao.programManagementDAO dao = new sgt.dao.programManagementDAO();
+    if (dao.updateProgram(id, code, name)) {                               
+        javax.swing.JOptionPane.showMessageDialog(this, "Program updated successfully!");
+        populate_table();
+        sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
+        jButton3.setEnabled(true);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Update failed. Check database connection.");
     }
             
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String code = jTextField1.getText().trim();
-        String name = jTextField3.getText().trim();
-        
-        if(code.isEmpty() || name.isEmpty()){
-            javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields!");
-            return;
-        }
-        sgt.model.Subject s = new sgt.model.Subject(code, name);
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
-        
-        
-        if (dao.addSubjects(s)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Subject added!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
-        }
+         String code = jTextField1.getText().trim();
+    String name = jTextField3.getText().trim();
+
+    if (code.isEmpty() || name.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+        return;
+    }
+
+    sgt.dao.programManagementDAO dao = new sgt.dao.programManagementDAO();
+    if (dao.addProgram(code, name)) {   
+        javax.swing.JOptionPane.showMessageDialog(this, "Program added!");
+        populate_table();
+        sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Failed to add program.");
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

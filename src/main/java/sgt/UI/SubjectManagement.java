@@ -7,6 +7,7 @@ package sgt.UI;
 import java.awt.Color;
 import sgt.session.UserSession;
 import sgt.util.WindowHelper;
+import sgt.util.TableHelper;
 
 /**
  *
@@ -14,7 +15,9 @@ import sgt.util.WindowHelper;
  * @author Skimtle
  */
 public class SubjectManagement extends javax.swing.JFrame {
-    private final String BASE_QUERY = "SELECT subject_id as 'ID', subject_code as 'Code', subject_name as 'Subject Name' FROM tbl_subjects";
+   private final String BASE_QUERY = 
+    "SELECT subject_id as 'ID', subject_code as 'Code', subject_name as 'Subject Name', " +
+    "room_number as 'Room', program as 'Program' FROM tbl_subjects";
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SubjectManagement.class.getName());
 
@@ -32,6 +35,7 @@ public class SubjectManagement extends javax.swing.JFrame {
         setResizable(false);
         jPanel1.setBackground(Color.decode("#F28C5E"));
         populate_table();
+        loadProgramDropdown();
     }
 
     private void populate_table(){
@@ -47,6 +51,15 @@ public class SubjectManagement extends javax.swing.JFrame {
         int row = jTable1.getSelectedRow();
         if (row == -1) return -1;
         return Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+    }
+    
+    private void loadProgramDropdown(){
+        program.removeAllItems();
+        program.addItem("Select Program");
+
+        for (String p : sgt.service.StudentService.getProgramList()){
+            program.addItem(p);
+        }
     }
     
     
@@ -67,11 +80,9 @@ public class SubjectManagement extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        Program = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         RoomNum = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        program = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,17 +134,12 @@ public class SubjectManagement extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Public Sans Medium", 0, 18)); // NOI18N
         jLabel4.setText("Program");
 
-        Program.addActionListener(this::ProgramActionPerformed);
-
         jLabel5.setFont(new java.awt.Font("Public Sans Medium", 0, 18)); // NOI18N
         jLabel5.setText("Room Number");
 
         RoomNum.addActionListener(this::RoomNumActionPerformed);
 
-        jLabel6.setFont(new java.awt.Font("Public Sans Medium", 0, 18)); // NOI18N
-        jLabel6.setText("Time");
-
-        jTextField5.addActionListener(this::jTextField5ActionPerformed);
+        program.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -155,14 +161,12 @@ public class SubjectManagement extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Program)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RoomNum)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(program, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -185,12 +189,8 @@ public class SubjectManagement extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Program, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RoomNum, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,8 +200,9 @@ public class SubjectManagement extends javax.swing.JFrame {
                             .addComponent(jButton3)
                             .addComponent(jButton4))
                         .addGap(34, 34, 34)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1))
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -243,62 +244,84 @@ public class SubjectManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int row = jTable1.getSelectedRow();
-        
-        if (row == -1){
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select a subject from the table to update!");
-            return;            
-        }
-        
-        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
-        String code = SubjectCode.getText().trim();
-        String name = SubjectName.getText().trim();
-        
-        if (code.isEmpty() || name.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }    
-        
-        sgt.model.Subject updatedSubj = new sgt.model.Subject(id, code, name);
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
-        
-        if (dao.updateSubjects(updatedSubj)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Subject updated successfully!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(SubjectCode, SubjectName, jTable1);
-            jButton3.setEnabled(true);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Update failed. Check database connection.");
+         int row = jTable1.getSelectedRow();
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a subject to update!");
+        return;
+    }
+
+    int id    = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+    String code = SubjectCode.getText().trim();
+    String name = SubjectName.getText().trim();
+    String room = RoomNum.getText().trim();                       
+    String prog = (String) program.getSelectedItem();            
+
+    if (code.isEmpty() || name.isEmpty() || room.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    if (prog == null || prog.equals("Select Program")) {            
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a program!");
+        return;
+    }
+
+    sgt.model.Subject updatedSubj = new sgt.model.Subject(id, code, name, room, prog);
+    sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
+
+    if (dao.updateSubjects(updatedSubj)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Subject updated successfully!");
+        populate_table();
+        sgt.util.UIHelper.clearComponents(SubjectCode, SubjectName, RoomNum, jTable1); 
+        program.setSelectedIndex(0);                            
+        jButton3.setEnabled(true);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Update failed.");
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int row = jTable1.getSelectedRow();
-        if(row != -1){
-            SubjectCode.setText(jTable1.getValueAt(row, 1).toString());
-            SubjectName.setText(jTable1.getValueAt(row, 2).toString());
-            jButton3.setEnabled(false);
-        }
-        
+    int row = jTable1.getSelectedRow();
+    if (row != -1) {
+        SubjectCode.setText(jTable1.getValueAt(row, 1).toString());
+        SubjectName.setText(jTable1.getValueAt(row, 2).toString());
+        RoomNum.setText(jTable1.getValueAt(row, 3).toString());
+
+        // match the program in the dropdown
+        String prog = jTable1.getValueAt(row, 4).toString();      
+        program.setSelectedItem(prog);
+
+        jButton3.setEnabled(false);
+    }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String code = SubjectCode.getText().trim();
-        String name = SubjectName.getText().trim();
-        
-        if(code.isEmpty() || name.isEmpty()){
-            javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }
 
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO(); // Ensure you have this DAO
-        if (dao.addSubjects(new sgt.model.Subject(code, name))) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Subject added successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            populate_table();
-            SubjectCode.setText("");
-            SubjectName.setText("");
-        } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Failed to add subject. Check console for errors.");
+    String code = SubjectCode.getText().trim();
+    String name = SubjectName.getText().trim();
+    String room = RoomNum.getText().trim();                          
+    String prog = (String) program.getSelectedItem();          
+
+    if (code.isEmpty() || name.isEmpty() || room.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    if (prog == null || prog.equals("Select Program")) {         
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a program!");
+        return;
+    }
+
+    sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
+    if (dao.addSubjects(new sgt.model.Subject(code, name, room, prog))) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Subject added successfully!");
+        populate_table();
+        SubjectCode.setText("");
+        SubjectName.setText("");
+        RoomNum.setText("");                                        
+        program.setSelectedIndex(0);                           
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Failed to add subject.");
     }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -311,17 +334,9 @@ public class SubjectManagement extends javax.swing.JFrame {
         }   
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProgramActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProgramActionPerformed
-
     private void RoomNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RoomNumActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,7 +364,6 @@ public class SubjectManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Program;
     private javax.swing.JTextField RoomNum;
     private javax.swing.JTextField SubjectCode;
     private javax.swing.JTextField SubjectName;
@@ -362,10 +376,9 @@ public class SubjectManagement extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JComboBox<String> program;
     // End of variables declaration//GEN-END:variables
 }
