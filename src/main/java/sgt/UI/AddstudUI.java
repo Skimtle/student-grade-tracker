@@ -7,6 +7,8 @@ import java.awt.Color;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import sgt.util.TableHelper;
 import javax.swing.JOptionPane;
+import sgt.UI.DashboardAdmin;
+import sgt.UI.DashboardFaculty;
 import sgt.session.UserSession;
 import sgt.util.WindowHelper;
 /**
@@ -23,8 +25,9 @@ public class AddstudUI extends javax.swing.JFrame {
         "s.last_name as 'Last Name', " +
         "s.year_level as 'Year', " +
         "p.program_code as 'Program', " + 
-        "s.faculty_id as 'Faculty ID', " +
-        "s.admin_id as 'Admin ID' " +
+        "s.age as 'Age', " +
+        "s.address as 'Address', " +
+        "s.date_of_birth as 'Birthdate' " +
         "FROM tbl_students s " +
         "JOIN tbl_programs p ON s.program_id = p.program_id";
     
@@ -52,7 +55,7 @@ public class AddstudUI extends javax.swing.JFrame {
      */
     
     private void populate_table(){
-        TableHelper.updateTable(tbl_students, BASE_STUDENT_QUERY);
+        TableHelper.updateTable(tbl_students, BASE_STUDENT_QUERY, "");
         }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,22 +73,28 @@ public class AddstudUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lname = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        AddStudent = new javax.swing.JButton();
         yrlevel = new javax.swing.JComboBox<>();
         program = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_students = new javax.swing.JTable();
         backb = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        Search = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        DeleteSearch = new javax.swing.JToggleButton();
+        Update = new javax.swing.JButton();
+        Clear = new javax.swing.JButton();
+        lname1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lname2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        lname3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 51));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Student Information"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Student Information"), "Student Information"));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("First Name:");
@@ -105,9 +114,9 @@ public class AddstudUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Program:");
 
-        jButton1.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
-        jButton1.setText("Add Student");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        AddStudent.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
+        AddStudent.setText("Add Student");
+        AddStudent.addActionListener(this::AddStudentActionPerformed);
 
         yrlevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
         yrlevel.addActionListener(this::yrlevelActionPerformed);
@@ -136,10 +145,10 @@ public class AddstudUI extends javax.swing.JFrame {
         backb.setText("back");
         backb.addActionListener(this::backbActionPerformed);
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        Search.addActionListener(this::SearchActionPerformed);
+        Search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
+                SearchKeyReleased(evt);
             }
         });
 
@@ -147,16 +156,34 @@ public class AddstudUI extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Search Student No.");
 
-        jToggleButton1.setText("Delete");
-        jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
+        DeleteSearch.setText("Delete");
+        DeleteSearch.addActionListener(this::DeleteSearchActionPerformed);
 
-        jButton2.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
-        jButton2.setText("Update");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        Update.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
+        Update.setText("Update");
+        Update.addActionListener(this::UpdateActionPerformed);
 
-        jButton3.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
-        jButton3.setText("Clear");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        Clear.setFont(new java.awt.Font("Public Sans Medium", 1, 12)); // NOI18N
+        Clear.setText("Clear");
+        Clear.addActionListener(this::ClearActionPerformed);
+
+        lname1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lname1.addActionListener(this::lname1ActionPerformed);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Age:");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Birthday");
+
+        lname2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lname2.addActionListener(this::lname2ActionPerformed);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Address");
+
+        lname3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lname3.addActionListener(this::lname3ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,39 +191,54 @@ public class AddstudUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(39, 39, 39)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(yrlevel, 0, 150, Short.MAX_VALUE)
-                                        .addComponent(fname)
-                                        .addComponent(program, 0, 1, Short.MAX_VALUE)
-                                        .addComponent(lname)))
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jToggleButton1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(28, 28, 28)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(backb))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fname, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(lname)
+                                    .addComponent(lname1)
+                                    .addComponent(lname2)
+                                    .addComponent(lname3))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(backb)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Search)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(39, 39, 39)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(yrlevel, 0, 150, Short.MAX_VALUE)
+                                                .addComponent(program, 0, 1, Short.MAX_VALUE)))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(DeleteSearch, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addComponent(AddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(Clear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -212,28 +254,40 @@ public class AddstudUI extends javax.swing.JFrame {
                     .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(lname1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(lname2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(lname3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(yrlevel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Update)
+                    .addComponent(AddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(57, 57, 57)
+                .addComponent(Clear)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(DeleteSearch)
+                .addGap(130, 130, 130)
                 .addComponent(backb)
                 .addGap(24, 24, 24))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,46 +306,40 @@ public class AddstudUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void AddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStudentActionPerformed
         String firstName = fname.getText().trim();
-        String lastName = lname.getText().trim();
-        int yearValue = yrlevel.getSelectedIndex() + 1;
-        String studentNum = sgt.service.StudentService.generateNextID();
-        
-        String selectedProgram = program.getSelectedItem().toString();
-        int programId = sgt.service.StudentService.getProgramId(selectedProgram);
-           
-        int currentId = sgt.session.UserSession.getUserId();
-        String role = sgt.session.UserSession.getCurrentRole();
-        
-        Integer fId = null; //facultyId
-        Integer aId = null; //adminId
-        
-        if("faculty".equals(role)){
-            fId = currentId;
-        } else {
-            aId = currentId;
-        }
-        
-        if (firstName.isEmpty() || lastName.isEmpty()) {
+    String lastName = lname.getText().trim();
+    String age = lname1.getText().trim();          
+    String birthday = lname2.getText().trim();      
+    String address = lname3.getText().trim();       
+    int yearValue = yrlevel.getSelectedIndex() + 1;
+    String studentNum = sgt.service.StudentService.generateNextID();
+    String selectedProgram = program.getSelectedItem().toString();
+    int programId = sgt.service.StudentService.getProgramId(selectedProgram);
+
+    int currentId = sgt.session.UserSession.getUserId();
+    String role = sgt.session.UserSession.getCurrentRole();
+    Integer fId = "faculty".equals(role) ? currentId : null;
+    Integer aId = "admin".equals(role) ? currentId : null;
+
+    if (firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || birthday.isEmpty() || address.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
-        }
+    }
 
-        sgt.model.Student newStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, fId, aId);
-        sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
-        boolean success = dao.addStudent(newStudent);
+    sgt.model.Student newStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, age, birthday, address, fId, aId);
+    sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
+
+    if (dao.addStudent(newStudent)) {
+        JOptionPane.showMessageDialog(this, "Student added successfully!");
+        fname.setText(""); lname.setText("");
+        lname1.setText(""); lname2.setText(""); lname3.setText("");
+        populate_table();
+    } else {
+        JOptionPane.showMessageDialog(this, "Failed to save to database.");
+    }
         
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Student added successfully!");
-            fname.setText("");
-            lname.setText("");
-            populate_table(); // Refresh the table
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to save to database.");
-        }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_AddStudentActionPerformed
 
     private void yrlevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yrlevelActionPerformed
         // TODO add your handling code here:
@@ -318,38 +366,41 @@ public class AddstudUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fnameActionPerformed
 
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String searchID = jTextField1.getText().trim();
+    private void SearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchKeyReleased
+        String searchID = Search.getText().trim();
         if(searchID.isEmpty()){
             populate_table();
         } else {
             String sql = BASE_STUDENT_QUERY + " WHERE s.student_number LIKE ?";
             sgt.util.TableHelper.updateTable(tbl_students, sql,  "%" + searchID + "%");
         }
-    }//GEN-LAST:event_jTextField1KeyReleased
+    }//GEN-LAST:event_SearchKeyReleased
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_SearchActionPerformed
 
     private void tbl_studentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_studentsMouseClicked
         int row = tbl_students.getSelectedRow();
-        
-        if(row != -1){
-            fname.setText(tbl_students.getValueAt(row, 1).toString());
-            lname.setText(tbl_students.getValueAt(row, 2).toString());
-            
-            String year = tbl_students.getValueAt(row, 3).toString();
-            yrlevel.setSelectedItem(year);
-            
-            String programName = tbl_students.getValueAt(row, 4).toString();
-            program.setSelectedItem(programName);
-            
-            jButton1.setEnabled(false);
-        }
+    if (row != -1) {
+        fname.setText(tbl_students.getValueAt(row, 1).toString());   
+        lname.setText(tbl_students.getValueAt(row, 2).toString());   
+
+        String year = tbl_students.getValueAt(row, 3).toString();
+        yrlevel.setSelectedItem(year);
+
+        String programName = tbl_students.getValueAt(row, 4).toString();
+        program.setSelectedItem(programName);
+
+        lname1.setText(tbl_students.getValueAt(row, 5).toString());
+        lname2.setText(tbl_students.getValueAt(row, 7).toString());  
+        lname3.setText(tbl_students.getValueAt(row, 6).toString());  
+
+        AddStudent.setEnabled(false);
+    }
     }//GEN-LAST:event_tbl_studentsMouseClicked
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void DeleteSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSearchActionPerformed
         int row = tbl_students.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Please select a student from the table first.");
@@ -366,48 +417,64 @@ public class AddstudUI extends javax.swing.JFrame {
                 populate_table();
             }
         }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_DeleteSearchActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         int row = tbl_students.getSelectedRow();
-        if (row == -1) { 
-            JOptionPane.showMessageDialog(this, "Please select a student from the table first!");
-            jButton1.setEnabled(false);
-            return;
-        }
-        String firstName = fname.getText().trim();
-        String lastName = lname.getText().trim();
-        int yearValue = yrlevel.getSelectedIndex() + 1;
-        String selectedProgram = program.getSelectedItem().toString();
-        int programId = sgt.service.StudentService.getProgramId(selectedProgram);
-        String studentNum = tbl_students.getValueAt(row, 0).toString();
-        
-        int currentId = sgt.session.UserSession.getUserId();
-        String role = sgt.session.UserSession.getCurrentRole();
-        Integer fId = "faculty".equals(role) ? currentId : null;
-        Integer aId = "admin".equals(role) ? currentId : null;
-        
-        if (firstName.isEmpty() || lastName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }
-        
-        sgt.model.Student updatedStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, fId, aId);
-        sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
-        
-        if (dao.updateStudent(updatedStudent)) {
-            JOptionPane.showMessageDialog(this, "Student updated successfully!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(fname, lname, yrlevel, program, tbl_students);
-        } else {
-            JOptionPane.showMessageDialog(this, "Update failed.");
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a student first!");
+        return;
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    String firstName = fname.getText().trim();
+    String lastName = lname.getText().trim();
+    String age = lname1.getText().trim();           
+    String birthday = lname2.getText().trim();      
+    String address = lname3.getText().trim();       
+    int yearValue = yrlevel.getSelectedIndex() + 1;
+    String selectedProgram = program.getSelectedItem().toString();
+    int programId = sgt.service.StudentService.getProgramId(selectedProgram);
+    String studentNum = tbl_students.getValueAt(row, 0).toString();
+
+    int currentId = sgt.session.UserSession.getUserId();
+    String role = sgt.session.UserSession.getCurrentRole();
+    Integer fId = "faculty".equals(role) ? currentId : null;
+    Integer aId = "admin".equals(role) ? currentId : null;
+
+    if (firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || birthday.isEmpty() || address.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+        return;
+    }
+
+    sgt.model.Student updatedStudent = new sgt.model.Student(studentNum, firstName, lastName, yearValue, programId, age, birthday, address, fId, aId);
+    sgt.dao.studentManagementDAO dao = new sgt.dao.studentManagementDAO();
+
+    if (dao.updateStudent(updatedStudent)) {
+        JOptionPane.showMessageDialog(this, "Student updated successfully!");
+        populate_table();
         sgt.util.UIHelper.clearComponents(fname, lname, yrlevel, program, tbl_students);
-        jButton1.setEnabled(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+        lname1.setText(""); lname2.setText(""); lname3.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "Update failed.");
+    }
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
+        sgt.util.UIHelper.clearComponents(fname, lname, yrlevel, program, tbl_students);
+        AddStudent.setEnabled(true);
+    }//GEN-LAST:event_ClearActionPerformed
+
+    private void lname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lname1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lname1ActionPerformed
+
+    private void lname2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lname2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lname2ActionPerformed
+
+    private void lname3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lname3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lname3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -435,21 +502,27 @@ public class AddstudUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddStudent;
+    private javax.swing.JButton Clear;
+    private javax.swing.JToggleButton DeleteSearch;
+    private javax.swing.JTextField Search;
+    private javax.swing.JButton Update;
     private javax.swing.JButton backb;
     private javax.swing.JTextField fname;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField lname;
+    private javax.swing.JTextField lname1;
+    private javax.swing.JTextField lname2;
+    private javax.swing.JTextField lname3;
     private javax.swing.JComboBox<String> program;
     private javax.swing.JTable tbl_students;
     private javax.swing.JComboBox<String> yrlevel;

@@ -5,6 +5,7 @@
 package sgt.UI;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import sgt.UI.DashboardFaculty;
 import sgt.session.UserSession;
 import sgt.util.WindowHelper;
 
@@ -55,7 +56,6 @@ public class ProgramManagement extends javax.swing.JFrame {
         jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1205, 819));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -189,47 +189,45 @@ public class ProgramManagement extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int row = jTable1.getSelectedRow();
         
-        if (row == -1){
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select a program from the table to update!");
-            return;            
-        }
+            if (row == -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Please select a program from the table to update!");
+                return;            
+            }
         
         int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
         String code = jTextField1.getText().trim();
         String name = jTextField3.getText().trim();
+            if (code.isEmpty() || name.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
+                return;
+            }    
         
-        if (code.isEmpty() || name.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Fields cannot be empty!");
-            return;
-        }    
+        sgt.model.Program updatedProgram = new sgt.model.Program(id, code, name);
+        sgt.dao.programManagementDAO dao = new sgt.dao.programManagementDAO();
         
-        sgt.model.Subject updatedSubjects = new sgt.model.Subject(id, code, name);
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
-        
-        if (dao.updateSubjects(updatedSubjects)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Subject updated successfully!");
-            populate_table();
-            sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
-            jButton3.setEnabled(true);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Update failed. Check database connection.");
-    }
-            
+            if (dao.updateProgram(updatedProgram)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Subject program successfully!");
+                populate_table();
+                sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);
+                jButton3.setEnabled(true);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Update failed. Check database connection.");
+            } 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String code = jTextField1.getText().trim();
+         String code = jTextField1.getText().trim();
         String name = jTextField3.getText().trim();
         
         if(code.isEmpty() || name.isEmpty()){
             javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields!");
             return;
         }
-        sgt.model.Subject s = new sgt.model.Subject(code, name);
-        sgt.dao.subjectDAO dao = new sgt.dao.subjectDAO();
+        sgt.model.Program p = new sgt.model.Program(code, name);
+        sgt.dao.programManagementDAO dao = new sgt.dao.programManagementDAO();
         
         
-        if (dao.addSubjects(s)) {
+        if (dao.addProgram(p)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Subject added!");
             populate_table();
             sgt.util.UIHelper.clearComponents(jTextField1, jTextField3, jTable1);

@@ -7,6 +7,7 @@ sgt\model\Grade.class
 sgt\service\StudentService.class
 sgt\dao\GradeDAO.class
 sgt\dao\subjectDAO.class
+sgt\UI\AddFacultyUI$1.class
 sgt\UI\Grade_Management$4.class
 sgt\model\faculty.class
 sgt\model\Subject.class
